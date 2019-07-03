@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
+import base64 from 'react-native-base64';
+import request from 'request';
 
 import "../css/Login.css";
 
@@ -10,9 +13,11 @@ class Login extends Component {
             password: '',
             isUsernameValid: true,
             isSubmitEnabled: false,
+            isLoggedIn: false
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.isSubmitEnabledUpdate = this.isSubmitEnabledUpdate.bind(this);
         this.validateUserName = this.validateUserName.bind(this);
     }
@@ -42,24 +47,37 @@ class Login extends Component {
         return email.length === 0 || regEx.test(String(email).toLowerCase());
     };
 
-    handleSubmit = (event) => {
+    handleSubmit(event) {
         event.preventDefault();
 
-        fetch('http://localhost:8080/login', {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({"username": this.state.username, "password": this.state.password})
-        }).then(function (response) {
-            return response.json();
-        }).then(function (myJson) {
-            alert(JSON.stringify(myJson));
+        let options = {
+            method: 'GET',
+            url: 'https://localhost:8443/login',
+            headers:
+                {
+                    'cache-control': 'no-cache',
+                    Authorization: 'Basic ' + base64.encode(this.state.username + ":" + this.state.password)
+                }
+        };
+
+        request(options, function (error, response, body) {
+            if (error) throw new Error(error);
+
+            console.log(body);
+        });
+
+        this.setState({
+            isLoggedIn: true
         });
     };
 
     render() {
+        if (this.state.isLoggedIn === true) {
+            return (
+                <Redirect to='/home'/>
+            );
+        }
+
         return (
             <div className="login">
                 <div className="form">
