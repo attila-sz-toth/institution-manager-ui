@@ -7,17 +7,13 @@ import ProtectedRoute from "./ProtectedRoute";
 
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {isAuthenticated: true};
-    }
 
     render() {
         return (
             <div className="App container">
                 <Router>
                     <Switch>
-                        <Route path="/" exact component={Login}/>
+                        <ProtectedRoute path="/" exact component={Home}/>
                         <Route path="/login" exact component={Login}/>
                         <ProtectedRoute path="/home" exact component={Home}/>
                     </Switch>
