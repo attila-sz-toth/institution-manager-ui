@@ -50,8 +50,8 @@ class Login extends Component {
 
         AuthenticationService
             .login(this.state.username, this.state.password)
-            .then(() => {
-                AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+            .then(response => {
+                AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password, response.data.role);
                 this.props.history.push(`/home`);
                 this.setState({
                     isLoginFailed: false,
@@ -83,7 +83,8 @@ class Login extends Component {
                                placeholder="Jelszó"/>
                         <button type="submit" disabled={!this.state.isSubmitEnabled}>Bejelentkezés</button>
                         <a className="form-link" href="?">Elfelejtettem a jelszavam!</a>
-                        {this.state.isLoginFailed && <label className="error-message">Hibás felhasználónév vagy jelszó!</label>}
+                        {this.state.isLoginFailed &&
+                        <label className="error-message">Hibás felhasználónév vagy jelszó!</label>}
                     </form>
                 </div>
             </div>

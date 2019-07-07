@@ -3,6 +3,7 @@ import base64 from 'react-native-base64';
 
 const REST_SERVICE_URL = 'https://localhost:8443';
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'username';
+export const ROLE_SESSION_ATTRIBUTE_NAME = 'role';
 
 class AuthenticationService {
 
@@ -17,8 +18,9 @@ class AuthenticationService {
         // OR return 'Basic ' + window.btoa(username + ":" + password)
     }
 
-    registerSuccessfulLogin(username, password) {
+    registerSuccessfulLogin(username, password, role) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username);
+        sessionStorage.setItem(ROLE_SESSION_ATTRIBUTE_NAME, role);
         this.setupAxiosInterceptors(this.createBasicAuthToken(username, password))
     }
 
