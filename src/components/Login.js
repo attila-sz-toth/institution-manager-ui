@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
-import base64 from 'react-native-base64';
-import request from 'request';
+import AuthenticationService from '../services/AuthenticationService'
 
 import "../css/Login.css";
 
@@ -13,7 +11,6 @@ class Login extends Component {
             password: '',
             isUsernameValid: true,
             isSubmitEnabled: false,
-            isLoggedIn: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -50,34 +47,17 @@ class Login extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        let options = {
-            method: 'GET',
-            url: 'https://localhost:8443/login',
-            headers:
-                {
-                    'cache-control': 'no-cache',
-                    Authorization: 'Basic ' + base64.encode(this.state.username + ":" + this.state.password)
-                }
-        };
-
-        request(options, function (error, response, body) {
-            if (error) throw new Error(error);
-
-            console.log(body);
-        });
-
-        this.setState({
-            isLoggedIn: true
+        AuthenticationService
+            .login(this.state.username, this.state.password)
+            .then(() => {
+                AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password)
+                this.props.history.push(`/home`)
+            }).catch(() => {
+            console.log("Authentication failed!")
         });
     };
 
     render() {
-        if (this.state.isLoggedIn === true) {
-            return (
-                <Redirect to='/home'/>
-            );
-        }
-
         return (
             <div className="login">
                 <div className="form">
