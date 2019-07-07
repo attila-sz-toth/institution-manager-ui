@@ -11,6 +11,7 @@ class Login extends Component {
             password: '',
             isUsernameValid: true,
             isSubmitEnabled: false,
+            isLoginFailed: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -50,10 +51,16 @@ class Login extends Component {
         AuthenticationService
             .login(this.state.username, this.state.password)
             .then(() => {
-                AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password)
-                this.props.history.push(`/home`)
+                AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+                this.props.history.push(`/home`);
+                this.setState({
+                    isLoginFailed: false,
+                });
             }).catch(() => {
-            console.log("Authentication failed!")
+            console.log("Authentication failed!");
+            this.setState({
+                isLoginFailed: true,
+            });
         });
     };
 
@@ -76,6 +83,7 @@ class Login extends Component {
                                placeholder="Jelszó"/>
                         <button type="submit" disabled={!this.state.isSubmitEnabled}>Bejelentkezés</button>
                         <a className="form-link" href="?">Elfelejtettem a jelszavam!</a>
+                        {this.state.isLoginFailed && <label className="error-message">Hibás felhasználónév vagy jelszó!</label>}
                     </form>
                 </div>
             </div>
