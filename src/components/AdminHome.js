@@ -1,13 +1,20 @@
 import React, {Component} from 'react';
-import AuthenticationService from '../services/AuthenticationService';
+import AuthenticationService, {ADMIN_ROLE} from '../services/AuthenticationService';
+import {Redirect} from "react-router-dom";
 
 class AdminHome extends Component {
     render() {
-        return (
-            <div className="welcome">
-                Welcome {AuthenticationService.getUserName()}!
-            </div>
-        );
+        if (AuthenticationService.getRole() === ADMIN_ROLE) {
+            return (
+                <div className="welcome">
+                    Welcome {AuthenticationService.getUserName()}!
+                    <br/>
+                    Your role is: {AuthenticationService.getRole()}.
+                </div>
+            );
+        } else {
+            return <Redirect to="/login"/>
+        }
     }
 }
 

@@ -1,14 +1,20 @@
 import React, {Component} from 'react';
-import AuthenticationService from '../services/AuthenticationService';
+import AuthenticationService, {EMPLOYEE_ROLE} from '../services/AuthenticationService';
+import {Redirect} from "react-router-dom";
 
 class EmployeeHome extends Component {
     render() {
-        return (
-            <div className="welcome">
-                Welcome {AuthenticationService.getUserName()}!
-                Your role is: {}
-            </div>
-        );
+        if (AuthenticationService.getRole() === EMPLOYEE_ROLE) {
+            return (
+                <div className="welcome">
+                    Welcome {AuthenticationService.getUserName()}!
+                    <br/>
+                    Your role is: {AuthenticationService.getRole()}.
+                </div>
+            );
+        } else {
+            return <Redirect to="/login"/>
+        }
     }
 }
 

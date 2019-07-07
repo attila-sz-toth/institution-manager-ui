@@ -4,6 +4,8 @@ import base64 from 'react-native-base64';
 const REST_SERVICE_URL = 'https://localhost:8443';
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'username';
 export const ROLE_SESSION_ATTRIBUTE_NAME = 'role';
+export const ADMIN_ROLE = '[ADMIN]';
+export const EMPLOYEE_ROLE = '[EMPLOYEE]';
 
 class AuthenticationService {
 
@@ -37,6 +39,7 @@ class AuthenticationService {
 
     logout() {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
+        sessionStorage.removeItem(ROLE_SESSION_ATTRIBUTE_NAME);
     }
 
     isUserLoggedIn() {
@@ -46,8 +49,12 @@ class AuthenticationService {
 
     getUserName() {
         let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
-        if (user === null) return '';
-        return user
+        return user === null ? '' : user;
+    }
+
+    getRole() {
+        let role = sessionStorage.getItem(ROLE_SESSION_ATTRIBUTE_NAME);
+        return role === null ? '' : role;
     }
 }
 
