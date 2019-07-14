@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
-import AuthenticationService, {ADMIN_ROLE, EMPLOYEE_ROLE} from "../services/AuthenticationService";
-import {Redirect} from "react-router-dom";
+import {Route} from "react-router-dom";
+import AdminHome from "./AdminHome";
+import EmployeeHome from "./EmployeeHome";
+import AuthenticationService, {ADMIN_ROLE, EMPLOYEE_ROLE} from '../services/AuthenticationService'
 
 class Home extends Component {
+
     render() {
         if (AuthenticationService.getRole() === ADMIN_ROLE) {
-            return <Redirect to="/admin-home"/>
+            return <AdminHome/>
         } else if (AuthenticationService.getRole() === EMPLOYEE_ROLE) {
-            return <Redirect to="/employee-home"/>
-        } else {
-            return <Redirect to="/login"/>
+            return <EmployeeHome/>
         }
     }
 }
