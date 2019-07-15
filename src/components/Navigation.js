@@ -13,7 +13,7 @@ class Navigation extends Component {
                 </ul>
                 <ul className="navigation-item" id="navigation-right">
                     <li>
-                        <Link className="nav-link" to="/settings">{AuthenticationService.getUserName()}</Link>
+                        <Link className="nav-link" to="/profile-settings">{AuthenticationService.getUserName()}</Link>
                     </li>
                     <li>
                         <Link className="nav-link" to="/"

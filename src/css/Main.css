@@ -1,0 +1,9 @@
+.main-component {
+    margin-top: 100px;
+    width: 70%;
+    padding-left: 15%;
+    padding-right: 15%;
+
+    display: flex;
+    flex-direction: column;
+}

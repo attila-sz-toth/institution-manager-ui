@@ -58,3 +58,17 @@ ul {
 .nav-link:hover {
     opacity: 0.5;
 }
+
+.logo-block-helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+#navigation-logo {
+    display: inline-block;
+    vertical-align: middle;
+    max-height: 35px;
+    width: auto;
+    height: auto;
+}

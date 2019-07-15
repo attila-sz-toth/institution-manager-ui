@@ -2,14 +2,15 @@ import React, {Component} from 'react'
 import {Redirect, Route} from 'react-router-dom'
 import AuthenticationService from '../services/AuthenticationService';
 import Navigation from "./Navigation";
+import '../css/Main.css';
 
 class ProtectedRoute extends Component {
     render() {
         if (AuthenticationService.isUserLoggedIn()) {
             return (
-                <div id="main">
+                <div id="protected-route-container">
                     <Navigation/>
-                    <Route {...this.props} />
+                    <Route {...this.props}/>
                 </div>
             );
         } else {

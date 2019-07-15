@@ -5,6 +5,7 @@ import Login from "./Login";
 import AdminHome from "./AdminHome";
 import EmployeeHome from "./EmployeeHome";
 import Home from "./Home";
+import Profile from "./Profile";
 
 
 class App extends Component {
