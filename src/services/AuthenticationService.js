@@ -1,7 +1,8 @@
 import axios from 'axios';
 import base64 from 'react-native-base64';
 
-const REST_SERVICE_URL = 'https://localhost:8443';
+// const REST_SERVICE_URL = 'https://localhost:8443';
+const REST_SERVICE_URL = 'http://localhost:8080';
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'username';
 export const ROLE_SESSION_ATTRIBUTE_NAME = 'role';
 export const ADMIN_ROLE = '[ADMIN]';
@@ -12,7 +13,12 @@ class AuthenticationService {
     login(username, password) {
         console.log('Logging in user ' + username);
         return axios.get(`${REST_SERVICE_URL}/login`,
-            {headers: {authorization: this.createBasicAuthToken(username, password)}})
+            {
+                headers: {
+                    authorization: this.createBasicAuthToken(username, password),
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
     }
 
     createBasicAuthToken(username, password) {
@@ -55,6 +61,20 @@ class AuthenticationService {
     getRole() {
         let role = sessionStorage.getItem(ROLE_SESSION_ATTRIBUTE_NAME);
         return role === null ? '' : role;
+    }
+
+    addUser(username, role) {
+        console.log('Creating new user ' + username + ' with role: ' + role);
+        return axios.post(`${REST_SERVICE_URL}/add-user`, {
+                username: username,
+                role: role
+            }, {
+                headers: {
+                    authorization: this.createBasicAuthToken(username, 'admin'),
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
     }
 }
 

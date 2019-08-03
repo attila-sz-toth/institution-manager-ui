@@ -1,7 +1,7 @@
 import axios from 'axios';
 import base64 from 'react-native-base64';
 
-const REST_SERVICE_URL = 'https://localhost:8443';
+const REST_SERVICE_URL = 'http://localhost:8080';
 
 class UserService {
 
