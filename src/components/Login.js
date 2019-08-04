@@ -54,12 +54,12 @@ class Login extends Component {
                 AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password, response.data.role);
                 this.props.history.push(`/home`);
                 this.setState({
-                    isSubmitFailed: false,
+                    isDeleteFailed: false,
                 });
             }).catch(() => {
             console.log("Authentication failed!");
             this.setState({
-                isSubmitFailed: true,
+                isDeleteFailed: true,
             });
         });
     };

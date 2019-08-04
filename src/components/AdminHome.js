@@ -3,6 +3,7 @@ import {Redirect} from "react-router-dom";
 import '../css/Main.css';
 import Login from "./Login";
 import AuthenticationService from "../services/AuthenticationService";
+import Users from "./Users";
 
 class AdminHome extends Component {
     constructor(props) {
@@ -12,8 +13,8 @@ class AdminHome extends Component {
             role: "",
             isUsernameValid: true,
             isSubmitEnabled: false,
-            isSubmitFailed: false,
-            isSubmitSuccessful: false
+            isDeleteFailed: false,
+            isDeleteSuccessful: false
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,7 +30,7 @@ class AdminHome extends Component {
     };
 
     isSubmitEnabledUpdate() {
-        return (this.state.isUsernameValid);
+        return (this.state.isUsernameValid && this.state.role !== "");
     };
 
     validateUserName(event) {
@@ -51,13 +52,13 @@ class AdminHome extends Component {
             .then(response => {
                 console.log("User registered successfully!");
                 this.setState({
-                    isSubmitFailed: false,
-                    isSubmitSuccessful: true
+                    isDeleteFailed: false,
+                    isDeleteSuccessful: true
                 });
             }).catch(() => {
             console.log("User registration failed!");
             this.setState({
-                isSubmitFailed: true,
+                isDeleteFailed: true,
             });
         });
     };
@@ -86,11 +87,13 @@ class AdminHome extends Component {
                     </select>
 
                     <button type="submit" disabled={!this.state.isSubmitEnabled}>Új Felhasználó Hozzáadása</button>
-                    {this.state.isSubmitFailed &&
+                    {this.state.isDeleteFailed &&
                     <label className="error-message">Új felhasználó hozzáadása sikertelen!</label>}
-                    {this.state.isSubmitSuccessful &&
+                    {this.state.isDeleteSuccessful &&
                     <label className="success-message">Új feljasználó sikeresen hozzáadva!</label>}
                 </form>
+                <h3>Felhasználók</h3>
+                <Users/>
             </div>
         );
     }

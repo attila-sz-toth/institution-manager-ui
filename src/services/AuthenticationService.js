@@ -7,6 +7,7 @@ export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'username';
 export const ROLE_SESSION_ATTRIBUTE_NAME = 'role';
 export const ADMIN_ROLE = '[ADMIN]';
 export const EMPLOYEE_ROLE = '[EMPLOYEE]';
+export const TOKEN = 'TOKEN';
 
 class AuthenticationService {
 
@@ -26,10 +27,12 @@ class AuthenticationService {
         // OR return 'Basic ' + window.btoa(username + ":" + password)
     }
 
+
     registerSuccessfulLogin(username, password, role) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username);
         sessionStorage.setItem(ROLE_SESSION_ATTRIBUTE_NAME, role);
-        this.setupAxiosInterceptors(this.createBasicAuthToken(username, password))
+        sessionStorage.setItem(TOKEN, this.createBasicAuthToken(username, password));
+        this.setupAxiosInterceptors(this.createBasicAuthToken(username, password));
     }
 
     setupAxiosInterceptors(token) {
@@ -70,11 +73,23 @@ class AuthenticationService {
                 role: role
             }, {
                 headers: {
-                    authorization: this.createBasicAuthToken(username, 'admin'),
+                    authorization: sessionStorage.getItem(TOKEN),
                     'Content-Type': 'application/json'
                 }
             }
         )
+    }
+
+    getUsers() {
+        console.log('Calling /get-users...');
+        return axios.get(`${REST_SERVICE_URL}/get-users`, {
+                responseType: 'json',
+                headers: {
+                    authorization: sessionStorage.getItem(TOKEN),
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
     }
 }
 
