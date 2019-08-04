@@ -1,12 +1,11 @@
 import axios from 'axios';
-import base64 from 'react-native-base64';
+import base64 from "react-native-base64";
 
-// const REST_SERVICE_URL = 'https://localhost:8443';
-const REST_SERVICE_URL = 'http://localhost:8080';
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'username';
 export const ROLE_SESSION_ATTRIBUTE_NAME = 'role';
 export const ADMIN_ROLE = '[ADMIN]';
 export const EMPLOYEE_ROLE = '[EMPLOYEE]';
+export const REST_SERVICE_URL = 'http://localhost:8080';
 export const TOKEN = 'TOKEN';
 
 class AuthenticationService {
@@ -22,16 +21,11 @@ class AuthenticationService {
             })
     }
 
-    createBasicAuthToken(username, password) {
-        return 'Basic ' + base64.encode(username + ":" + password)
-        // OR return 'Basic ' + window.btoa(username + ":" + password)
-    }
-
-
     registerSuccessfulLogin(username, password, role) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username);
         sessionStorage.setItem(ROLE_SESSION_ATTRIBUTE_NAME, role);
         sessionStorage.setItem(TOKEN, this.createBasicAuthToken(username, password));
+
         this.setupAxiosInterceptors(this.createBasicAuthToken(username, password));
     }
 
@@ -46,9 +40,14 @@ class AuthenticationService {
         )
     }
 
+    createBasicAuthToken(username, password) {
+        return 'Basic ' + base64.encode(username + ":" + password)
+    }
+
     logout() {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
         sessionStorage.removeItem(ROLE_SESSION_ATTRIBUTE_NAME);
+        sessionStorage.removeItem(TOKEN);
     }
 
     isUserLoggedIn() {
@@ -66,40 +65,9 @@ class AuthenticationService {
         return role === null ? '' : role;
     }
 
-    addUser(username, role) {
-        console.log('Creating new user ' + username + ' with role: ' + role);
-        return axios.post(`${REST_SERVICE_URL}/add-user`, {
-                username: username,
-                role: role
-            }, {
-                headers: {
-                    authorization: sessionStorage.getItem(TOKEN),
-                    'Content-Type': 'application/json'
-                }
-            }
-        )
-    }
-
-    deleteUser(username) {
-        console.log('Deleting user ' + username);
-        return axios.post(`${REST_SERVICE_URL}/delete-user`, username, {
-                headers: {
-                    authorization: sessionStorage.getItem(TOKEN),
-                    'Content-Type': 'text/plain'
-                }
-            }
-        )
-    }
-
-    getUsers() {
-        return axios.get(`${REST_SERVICE_URL}/get-users`, {
-                responseType: 'json',
-                headers: {
-                    authorization: sessionStorage.getItem(TOKEN),
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
+    getToken() {
+        let token = sessionStorage.getItem(TOKEN);
+        return token === null ? '' : token;
     }
 }
 

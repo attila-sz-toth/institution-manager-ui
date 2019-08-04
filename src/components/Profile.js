@@ -3,7 +3,7 @@ import {Redirect, Route} from 'react-router-dom'
 import '../css/Main.css';
 import '../css/Profile.css';
 import AuthenticationService from "../services/AuthenticationService";
-import UserService from "../services/UserService";
+import UserService from "../services/UserProfileService";
 
 class Profile extends Component {
     constructor(props) {
@@ -68,9 +68,21 @@ class Profile extends Component {
         if (AuthenticationService.isUserLoggedIn()) {
             return (
                 <div className="main-component">
-                    <h3>Felhasználó adatai</h3>
-                    <label className="user-info">Felhasználónév: {AuthenticationService.getUserName()}</label>
-                    <label className="user-info">Jogosultsági kör: {AuthenticationService.getRole()}</label>
+                    <h3>Saját adatok</h3>
+                    <table className="users-table">
+                        <thead>
+                        <tr>
+                            <th className="users-table-header">E-mail cím</th>
+                            <th className="users-table-header">Jogosultsági kör</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td className="users-table-cell">{AuthenticationService.getUserName()}</td>
+                            <td className="users-table-cell">{AuthenticationService.getRole()}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                     <h3>Jelszó Megváltoztatása</h3>
                     <form id="profile-form" onSubmit={this.handleSubmit}>
                         <label>

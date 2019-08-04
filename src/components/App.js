@@ -2,7 +2,7 @@ import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom
 import React, {Component} from 'react';
 import ProtectedRoute from "./ProtectedRoute";
 import Login from "./Login";
-import AdminHome from "./AdminHome";
+import AdminHome from "./admin/AdminHome";
 import EmployeeHome from "./EmployeeHome";
 import Home from "./Home";
 import Profile from "./Profile";

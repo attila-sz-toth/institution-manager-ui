@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
-import {Redirect} from "react-router-dom";
-import '../css/Main.css';
-import Login from "./Login";
-import AuthenticationService from "../services/AuthenticationService";
-import Users from "./Users";
+import Utils from "../../utils/Utils";
+import UserAdminService from "../../services/UserAdminService";
 
-class AdminHome extends Component {
+import '../../css/Main.css';
+
+class AddUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: "",
-            role: "",
+            role: "ADMIN",
             isUsernameValid: true,
+            isUserExist: false,
             isSubmitEnabled: false,
             isDeleteFailed: false,
             isDeleteSuccessful: false
@@ -30,11 +30,11 @@ class AdminHome extends Component {
     };
 
     isSubmitEnabledUpdate() {
-        return (this.state.isUsernameValid && this.state.role !== "");
+        return (this.state.isUsernameValid);
     };
 
     validateUserName(event) {
-        let isUsernameValidUpdate = Login.validateEmail(event.target.value);
+        let isUsernameValidUpdate = AddUser.validateEmail(event.target.value);
         this.setState({
             isUsernameValid: isUsernameValidUpdate
         });
@@ -48,7 +48,7 @@ class AdminHome extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        AuthenticationService.addUser(this.state.username, this.state.role)
+        UserAdminService.addUser(this.state.username, this.state.role)
             .then(response => {
                 console.log("User registered successfully!");
                 this.setState({
@@ -65,8 +65,7 @@ class AdminHome extends Component {
 
     render() {
         return (
-            <div className="main-component">
-                <h3>Új felhasználó hozzáadása</h3>
+            <div>
                 <form className="main-form" onSubmit={this.handleSubmit}>
                     <label>
                         E-mail cím:
@@ -81,7 +80,6 @@ class AdminHome extends Component {
                     <select id="role"
                             onChange={this.handleChange}>
                         //TODO: populate drop down from DB
-                        <option value=""></option>
                         <option value="ADMIN">Aminisztrátor</option>
                         <option value="EMPLOYEE">Alkalmazott</option>
                     </select>
@@ -92,11 +90,9 @@ class AdminHome extends Component {
                     {this.state.isDeleteSuccessful &&
                     <label className="success-message">Új felhasználó sikeresen hozzáadva!</label>}
                 </form>
-                <h3>Felhasználók</h3>
-                <Users/>
             </div>
         );
     }
 }
 
-export default AdminHome;
+export default AddUser;

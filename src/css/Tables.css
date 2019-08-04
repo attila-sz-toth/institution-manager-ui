@@ -1,0 +1,78 @@
+tr {
+    overflow-x: scroll;
+}
+
+.users-table {
+    width: 100%;
+    max-width: 500px;
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+
+.users-table-header {
+    background: #f2f2f2;
+    font-family: "Roboto", sans-serif;
+    text-align: left;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
+
+.users-table-cell {
+    padding-left: 10px;
+}
+
+.main-form button:disabled {
+    background: grey;
+    cursor: default;
+}
+
+.delete-button {
+    text-transform: uppercase;
+    outline: 0;
+    background: #CC3300;
+    width: 100%;
+    border: 0;
+    padding: 5px;
+    color: #FFFFFF;
+    font-size: 11px;
+    opacity: 0.5;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+    cursor: pointer;
+}
+
+.delete-button:hover:enabled {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.pagination {
+    margin-top: 15px;
+}
+.pagination span {
+    cursor: pointer;
+    color: black;
+    float: left;
+    padding: 5px 16px;
+    font-size: 14px;
+    background-color: #f2f2f2;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+.pagination span.active {
+    font-weight: bold;
+    border: 1px solid #ddd;
+    opacity: 0.5;
+}
+
+.pagination span:hover {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    border: 1px solid #ddd;
+
+    opacity: 0.5;
+}

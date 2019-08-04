@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
-import '../css/Main.css';
-import '../css/Tables.css';
-import AuthenticationService from "../services/AuthenticationService";
+import UserAdminService from "../../services/UserAdminService";
 
-class Users extends Component {
+import '../../css/Main.css';
+import '../../css/Tables.css';
+
+class UsersGrid extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,12 +20,12 @@ class Users extends Component {
     }
 
     loadUsers() {
-        AuthenticationService.getUsers().then(response => {
+        UserAdminService.getUsers().then(response => {
             let rows = response.data.map(user => {
                 return (
                     <tr key={user.username}>
-                        <td>{user.username}</td>
-                        <td>{user.role}</td>
+                        <td className="users-table-cell">{user.username}</td>
+                        <td className="users-table-cell">{user.role}</td>
                         <td><input type="button" value="Törlés" onClick={() => this.handleDelete(user.username)}
                                    className="delete-button"/>
                         </td>
@@ -36,7 +37,7 @@ class Users extends Component {
     }
 
     handleDelete(username) {
-        AuthenticationService.deleteUser(username)
+        UserAdminService.deleteUser(username)
             .then(response => {
                 console.log("User is deleted successfully!");
                 this.setState({
@@ -58,8 +59,9 @@ class Users extends Component {
                 <table className="users-table">
                     <thead>
                     <tr>
-                        <th>FELHASZNÁLÓNÉV</th>
-                        <th>JOGOSULTSÁG</th>
+                        <th className="users-table-header">E-mail cím</th>
+                        <th className="users-table-header">Jogosultsági kör</th>
+                        <th className="users-table-header"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -71,9 +73,18 @@ class Users extends Component {
                 <label className="error-message">A felhasználó törlése sikertelen!</label>}
                 {this.state.isDeleteSuccessful &&
                 <label className="success-message">A felhasználó sikeresen törölve!</label>}
+
+                <div className="pagination">
+                    <span>&laquo;</span>
+                    <span className="active">1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>&raquo;</span>
+                </div>
             </div>
         );
     }
 }
 
-export default Users;
+export default UsersGrid;
