@@ -80,8 +80,18 @@ class AuthenticationService {
         )
     }
 
+    deleteUser(username) {
+        console.log('Deleting user ' + username);
+        return axios.post(`${REST_SERVICE_URL}/delete-user`, username, {
+                headers: {
+                    authorization: sessionStorage.getItem(TOKEN),
+                    'Content-Type': 'text/plain'
+                }
+            }
+        )
+    }
+
     getUsers() {
-        console.log('Calling /get-users...');
         return axios.get(`${REST_SERVICE_URL}/get-users`, {
                 responseType: 'json',
                 headers: {

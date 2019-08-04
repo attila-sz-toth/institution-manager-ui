@@ -12,38 +12,40 @@ class Users extends Component {
             isDeleteFailed: false,
             isDeleteSuccessful: false
         };
-
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
+        this.loadUsers();
+    }
+
+    loadUsers() {
         AuthenticationService.getUsers().then(response => {
             let rows = response.data.map(user => {
-                console.log(user);
                 return (
                     <tr key={user.username}>
                         <td>{user.username}</td>
                         <td>{user.role}</td>
+                        <td><input type="button" value="Törlés" onClick={() => this.handleDelete(user.username)}
+                                   className="delete-button"/>
+                        </td>
                     </tr>
                 );
             });
-            console.log(rows);
             this.setState({users: rows});
         });
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
-
-        AuthenticationService.deleteUser(this.state.username)
+    handleDelete(username) {
+        AuthenticationService.deleteUser(username)
             .then(response => {
-                console.log("User registered successfully!");
+                console.log("User is deleted successfully!");
                 this.setState({
                     isDeleteFailed: false,
                     isDeleteSuccessful: true
                 });
+                this.loadUsers();
             }).catch(() => {
-            console.log("User registration failed!");
+            console.log("User deletion failed!");
             this.setState({
                 isDeleteFailed: true,
             });
@@ -52,15 +54,12 @@ class Users extends Component {
 
     render() {
         return (
-
-            <div className="table-container">
-
+            <div className="users-container">
                 <table className="users-table">
                     <thead>
                     <tr>
                         <th>FELHASZNÁLÓNÉV</th>
                         <th>JOGOSULTSÁG</th>
-                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -68,10 +67,12 @@ class Users extends Component {
                     </tbody>
                 </table>
 
-                {/*TO DO: Add pagination*/}
+                {this.state.isDeleteFailed &&
+                <label className="error-message">A felhasználó törlése sikertelen!</label>}
+                {this.state.isDeleteSuccessful &&
+                <label className="success-message">A felhasználó sikeresen törölve!</label>}
             </div>
-        )
-            ;
+        );
     }
 }
 

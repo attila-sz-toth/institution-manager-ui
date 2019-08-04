@@ -90,7 +90,7 @@ class AdminHome extends Component {
                     {this.state.isDeleteFailed &&
                     <label className="error-message">Új felhasználó hozzáadása sikertelen!</label>}
                     {this.state.isDeleteSuccessful &&
-                    <label className="success-message">Új feljasználó sikeresen hozzáadva!</label>}
+                    <label className="success-message">Új felhasználó sikeresen hozzáadva!</label>}
                 </form>
                 <h3>Felhasználók</h3>
                 <Users/>
