@@ -3,8 +3,7 @@ tr {
 }
 
 .users-table {
-    width: 100%;
-    max-width: 500px;
+    width: 1000px;
     border-collapse: separate;
     border-spacing: 2px;
 }
@@ -16,6 +15,21 @@ tr {
     padding: 5px 10px;
     font-size: 14px;
     border: 1px solid #ddd;
+}
+
+.users-table-header#e-mail {
+    min-width: 350px;
+    max-width: 500px;
+}
+
+.users-table-header#role {
+    min-width: 120px;
+    max-width: 120px;
+}
+
+.users-table-header#institution {
+    min-width: 350px;
+    max-width: 500px;
 }
 
 .users-table-cell {
@@ -67,6 +81,7 @@ tr {
     font-weight: bold;
     border: 1px solid #ddd;
     opacity: 0.5;
+    cursor: default;
 }
 
 .pagination span:hover {

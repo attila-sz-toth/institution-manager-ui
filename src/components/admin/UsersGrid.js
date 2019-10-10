@@ -10,29 +10,38 @@ class UsersGrid extends Component {
         super(props);
         this.state = {
             users: [],
+            currentPage: 0,
+            totalPages: 0,
             isDeleteFailed: false,
             isDeleteSuccessful: false
         };
     }
 
     componentDidMount() {
-        this.loadUsers();
+        this.loadUsers(this.state.currentPage);
     }
 
-    loadUsers() {
-        UserAdminService.getUsers().then(response => {
-            let rows = response.data.map(user => {
+    loadUsers(pageNumber) {
+        UserAdminService.getUsers(pageNumber).then(response => {
+            let rows = response.data.content.map(user => {
                 return (
                     <tr key={user.username}>
                         <td className="users-table-cell">{user.username}</td>
                         <td className="users-table-cell">{user.role}</td>
+                        <td className="users-table-cell">{user.institutions}</td>
                         <td><input type="button" value="Törlés" onClick={() => this.handleDelete(user.username)}
                                    className="delete-button"/>
                         </td>
                     </tr>
                 );
             });
-            this.setState({users: rows});
+            let currentPage = response.data.pageable.pageNumber;
+            let totalPages = response.data.totalPages;
+            this.setState({
+                users: rows,
+                currentPage: currentPage,
+                totalPages: totalPages
+            });
         });
     }
 
@@ -54,14 +63,34 @@ class UsersGrid extends Component {
     };
 
     render() {
+
+        let pagerArray = new Array(this.state.totalPages).fill(0).map((zero, index) => {
+                if (this.state.currentPage === (index)) {
+                    return <span className="active">{index + 1}</span>
+                } else {
+                    return <span onClick={() => this.loadUsers(index)}>{index + 1}</span>
+                }
+            }
+        );
+
+        let pagerNavigationBack = 0 === this.state.currentPage ?
+            <span className="active">&laquo;</span> :
+            <span onClick={() => this.loadUsers(this.state.currentPage - 1)}>&laquo;</span>;
+
+        let pagerNavigationForward = this.state.totalPages -1 === this.state.currentPage ?
+            <span className="active">&raquo;</span> :
+            <span onClick={() => this.loadUsers(this.state.currentPage + 1)}>&raquo;</span>;
+
         return (
+
             <div className="users-container">
                 <table className="users-table">
                     <thead>
                     <tr>
-                        <th className="users-table-header">E-mail cím</th>
-                        <th className="users-table-header">Jogosultsági kör</th>
-                        <th className="users-table-header"></th>
+                        <th className="users-table-header" id="e-mail">E-mail cím</th>
+                        <th className="users-table-header" id="role">Jogosultsági kör</th>
+                        <th className="users-table-header" id="institution">Intézmény</th>
+                        <th className="users-table-header" id="action">Művelet</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -75,12 +104,9 @@ class UsersGrid extends Component {
                 <label className="success-message">A felhasználó sikeresen törölve!</label>}
 
                 <div className="pagination">
-                    <span>&laquo;</span>
-                    <span className="active">1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>&raquo;</span>
+                    {pagerNavigationBack}
+                    {pagerArray}
+                    {pagerNavigationForward}
                 </div>
             </div>
         );

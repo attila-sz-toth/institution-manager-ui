@@ -9,7 +9,9 @@ class Navigation extends Component {
         return (
             <nav id="navigation-container">
                 <ul className="navigation-item" id="navigation-left">
-                    <li><Link className="nav-link" to="/admin-home">Felhasználók Kezelése</Link></li>
+                    <li><Link className="nav-link" to="/admin-user">Felhasználók Kezelése</Link></li>
+                    <li><Link className="nav-link" to="/admin-institution">Intézmények Kezelése</Link></li>
+                    <li><Link className="nav-link" to="/admin-home">Intézmények</Link></li>
                 </ul>
                 <ul className="navigation-item" id="navigation-right">
                     <li>

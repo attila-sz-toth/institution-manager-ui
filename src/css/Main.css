@@ -1,6 +1,6 @@
 .main-component {
     margin-top: 75px;
-    width: 70%;
+    width: 1000px;
     padding-left: 15%;
     padding-right: 15%;
 
@@ -68,4 +68,13 @@
     margin: 15px 0 0;
     color: #b3b3b3;
     font-size: 12px;
+}
+
+.users-container {
+    align-content: center;
+    display: contents;
+}
+
+.pagination {
+    align-self: center;
 }

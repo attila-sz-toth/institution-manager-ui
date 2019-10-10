@@ -18,7 +18,8 @@ class App extends Component {
                         <ProtectedRoute path="/" exact component={Home}/>
                         <ProtectedRoute path="/home" exact component={Home}/>
                         <ProtectedRoute path="/profile-settings" exact component={Profile}/>
-                        <ProtectedRoute path="/admin-home" exact component={AdminHome}/>
+                        <ProtectedRoute path="/admin-user" exact component={AdminHome}/>
+                        <ProtectedRoute path="/admin-institution" exact component={AdminHome}/>
                         <ProtectedRoute path="/employee-home" exact component={EmployeeHome}/>
                         <Route path="/login" exact component={Login}/>
                     </Switch>

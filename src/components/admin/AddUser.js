@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Utils from "../../utils/Utils";
 import UserAdminService from "../../services/UserAdminService";
 
 import '../../css/Main.css';
@@ -10,6 +9,9 @@ class AddUser extends Component {
         this.state = {
             username: "",
             role: "ADMIN",
+            roles: [],
+            institutions: [],
+
             isUsernameValid: true,
             isUserExist: false,
             isSubmitEnabled: false,
@@ -19,6 +21,17 @@ class AddUser extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidMount() {
+        this.loadRoles();
+    }
+
+    loadRoles() {
+        UserAdminService.getRoles().then(response => {
+            let rows = response.data;
+            this.setState({roles: rows});
+        });
     }
 
     handleChange(event) {
@@ -64,6 +77,11 @@ class AddUser extends Component {
     };
 
     render() {
+        let roles = this.state.roles;
+        let roleSearchItems = roles.map((role) =>
+            <option key={role}>{role}</option>
+        );
+
         return (
             <div>
                 <form className="main-form" onSubmit={this.handleSubmit}>
@@ -76,6 +94,13 @@ class AddUser extends Component {
                     />
                     <label>
                         Jogosultsági kör:
+                    </label>
+                    <select id="role"
+                            onChange={this.handleChange}>
+                        {roleSearchItems}
+                    </select>
+                    <label>
+                        Intézmény:
                     </label>
                     <select id="role"
                             onChange={this.handleChange}>

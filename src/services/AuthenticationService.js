@@ -3,8 +3,8 @@ import base64 from "react-native-base64";
 
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'username';
 export const ROLE_SESSION_ATTRIBUTE_NAME = 'role';
-export const ADMIN_ROLE = '[ADMIN]';
-export const EMPLOYEE_ROLE = '[EMPLOYEE]';
+export const ADMIN_ROLE = 'ADMIN';
+export const EMPLOYEE_ROLE = 'EMPLOYEE';
 export const REST_SERVICE_URL = 'http://localhost:8080';
 export const TOKEN = 'TOKEN';
 
