@@ -25,11 +25,11 @@ class UsersGrid extends Component {
         UserAdminService.getUsers(pageNumber).then(response => {
             let rows = response.data.content.map(user => {
                 return (
-                    <tr key={user.username}>
+                    <tr key={user.institutionName}>
                         <td className="users-table-cell">{user.username}</td>
                         <td className="users-table-cell">{user.role}</td>
                         <td className="users-table-cell">{user.institutions}</td>
-                        <td><input type="button" value="Törlés" onClick={() => this.handleDelete(user.username)}
+                        <td><input type="button" value="Törlés" onClick={() => this.handleDelete(user.institutionName)}
                                    className="delete-button"/>
                         </td>
                     </tr>
@@ -50,14 +50,14 @@ class UsersGrid extends Component {
             .then(response => {
                 console.log("User is deleted successfully!");
                 this.setState({
-                    isDeleteFailed: false,
-                    isDeleteSuccessful: true
+                    isSubmissionFailed: false,
+                    isSubmissionSuccessful: true
                 });
                 this.loadUsers();
             }).catch(() => {
             console.log("User deletion failed!");
             this.setState({
-                isDeleteFailed: true,
+                isSubmissionFailed: true,
             });
         });
     };

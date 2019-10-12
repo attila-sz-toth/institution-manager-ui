@@ -7,11 +7,12 @@ class UserAdminService {
     PATH_GET_USERS = `/user/get-users`;
     PATH_GET_ROLES = `/user/get-roles`;
 
-    addUser(username, role) {
+    addUser(username, role, institution) {
         console.log('Creating new user ' + username + ' with role: ' + role);
         return axios.post(`${REST_SERVICE_URL}${this.PATH_ADD_USER}`, {
-                username: username,
-                role: role
+                institutionName: username,
+                role: role,
+                institutionName: institution
             }, {
                 headers: {
                     authorization: AuthenticationService.getToken(),

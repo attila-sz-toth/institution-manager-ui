@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from "react-router-dom";
-import AuthenticationService from '../services/AuthenticationService';
+import AuthenticationService, {EMPLOYEE_ROLE} from '../services/AuthenticationService';
 
 import "../css/Navigation.css";
 
@@ -11,7 +11,9 @@ class Navigation extends Component {
                 <ul className="navigation-item" id="navigation-left">
                     <li><Link className="nav-link" to="/admin-user">Felhasználók Kezelése</Link></li>
                     <li><Link className="nav-link" to="/admin-institution">Intézmények Kezelése</Link></li>
-                    <li><Link className="nav-link" to="/admin-home">Intézmények</Link></li>
+                    {AuthenticationService.getRole() === EMPLOYEE_ROLE &&
+                    <li><Link className="nav-link" to="/admin-home">Intézmény</Link></li>
+                    }
                 </ul>
                 <ul className="navigation-item" id="navigation-right">
                     <li>

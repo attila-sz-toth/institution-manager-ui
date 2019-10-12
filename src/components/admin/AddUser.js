@@ -2,13 +2,16 @@ import React, {Component} from 'react';
 import UserAdminService from "../../services/UserAdminService";
 
 import '../../css/Main.css';
+import InstitutionService from "../../services/InstitutionService";
 
 class AddUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: "",
-            role: "ADMIN",
+            role: "",
+            institution: "",
+
             roles: [],
             institutions: [],
 
@@ -25,12 +28,20 @@ class AddUser extends Component {
 
     componentDidMount() {
         this.loadRoles();
+        this.loadInstitutions();
     }
 
     loadRoles() {
         UserAdminService.getRoles().then(response => {
             let rows = response.data;
             this.setState({roles: rows});
+        });
+    }
+
+    loadInstitutions() {
+        InstitutionService.getInstitutions().then(response => {
+            let rows = response.data.map(institution => institution.institutionName);
+            this.setState({institutions: rows});
         });
     }
 
@@ -61,17 +72,17 @@ class AddUser extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        UserAdminService.addUser(this.state.username, this.state.role)
+        UserAdminService.addUser(this.state.username, this.state.role, this.state.institution)
             .then(response => {
                 console.log("User registered successfully!");
                 this.setState({
-                    isDeleteFailed: false,
-                    isDeleteSuccessful: true
+                    isSubmissionFailed: false,
+                    isSubmissionSuccessful: true
                 });
             }).catch(() => {
             console.log("User registration failed!");
             this.setState({
-                isDeleteFailed: true,
+                isSubmissionFailed: true,
             });
         });
     };
@@ -80,6 +91,11 @@ class AddUser extends Component {
         let roles = this.state.roles;
         let roleSearchItems = roles.map((role) =>
             <option key={role}>{role}</option>
+        );
+
+        let institutions = this.state.institutions;
+        let institutionSearchItems = institutions.map((institution) =>
+            <option key={institution}>{institution}</option>
         );
 
         return (
@@ -97,16 +113,16 @@ class AddUser extends Component {
                     </label>
                     <select id="role"
                             onChange={this.handleChange}>
+                        <option hidden disabled selected value> -- Válassza ki a jogosultságot -- </option>
                         {roleSearchItems}
                     </select>
                     <label>
                         Intézmény:
                     </label>
-                    <select id="role"
+                    <select id="institution"
                             onChange={this.handleChange}>
-                        //TODO: populate drop down from DB
-                        <option value="ADMIN">Aminisztrátor</option>
-                        <option value="EMPLOYEE">Alkalmazott</option>
+                        <option hidden disabled selected value> -- Válassza ki az intézményt -- </option>
+                        {institutionSearchItems}
                     </select>
 
                     <button type="submit" disabled={!this.state.isSubmitEnabled}>Új Felhasználó Hozzáadása</button>

@@ -6,6 +6,7 @@ import AdminHome from "./admin/AdminHome";
 import EmployeeHome from "./EmployeeHome";
 import Home from "./Home";
 import Profile from "./Profile";
+import AdminInstitution from "./admin/AdminInstitution";
 
 
 class App extends Component {
@@ -19,7 +20,7 @@ class App extends Component {
                         <ProtectedRoute path="/home" exact component={Home}/>
                         <ProtectedRoute path="/profile-settings" exact component={Profile}/>
                         <ProtectedRoute path="/admin-user" exact component={AdminHome}/>
-                        <ProtectedRoute path="/admin-institution" exact component={AdminHome}/>
+                        <ProtectedRoute path="/admin-institution" exact component={AdminInstitution}/>
                         <ProtectedRoute path="/employee-home" exact component={EmployeeHome}/>
                         <Route path="/login" exact component={Login}/>
                     </Switch>
