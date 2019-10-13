@@ -3,6 +3,7 @@
     width: 1000px;
     padding-left: 15%;
     padding-right: 15%;
+    display: grid;
 }
 
 .main-form {
@@ -43,6 +44,7 @@
     padding: 15px;
     box-sizing: border-box;
     font-size: 14px;
+    cursor: pointer;
 }
 
 .main-form button {

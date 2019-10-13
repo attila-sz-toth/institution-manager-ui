@@ -2,12 +2,14 @@ import axios from "axios/index";
 import AuthenticationService, {REST_SERVICE_URL} from "./AuthenticationService";
 
 class InstitutionService {
-    PATH_GET_INSTITUTIONS = `/institutions/get-institutions`;
-    PATH_GET_INSTITUTION_TYPES = `/institutions/get-institution-types`;
-    PATH_GET_CARE_TYPES = `/institutions/get-care-types`;
+    PATH_BASE = '/institutions';
+    PATH_GET_INSTITUTIONS = `${this.PATH_BASE}/get-institutions`;
+    PATH_GET_INSTITUTION_TYPES = `${this.PATH_BASE}/get-institution-types`;
+    PATH_GET_CARE_TYPES = `${this.PATH_BASE}/get-care-types`;
+    PATH_POST_ADD_INSTITUTION = `${this.PATH_BASE}/add-institution`;
 
-    getInstitutions() {
-        return axios.get(`${REST_SERVICE_URL}${this.PATH_GET_INSTITUTIONS}`, {
+    simpleGet(path) {
+        return axios.get(`${REST_SERVICE_URL}${path}`, {
                 responseType: 'json',
                 headers: {
                     authorization: AuthenticationService.getToken(),
@@ -15,39 +17,35 @@ class InstitutionService {
                 }
             }
         );
+    }
+
+    getInstitutions() {
+        return this.simpleGet(this.PATH_GET_INSTITUTIONS);
     }
 
     getInstitutionTypes() {
-        return axios.get(`${REST_SERVICE_URL}${this.PATH_GET_INSTITUTION_TYPES}`, {
-                responseType: 'json',
-                headers: {
-                    authorization: AuthenticationService.getToken(),
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
+        return this.simpleGet(this.PATH_GET_INSTITUTION_TYPES);
     }
 
     getCareTypes() {
-        return axios.get(`${REST_SERVICE_URL}${this.PATH_GET_CARE_TYPES}`, {
-                responseType: 'json',
-                headers: {
-                    authorization: AuthenticationService.getToken(),
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
+        return this.simpleGet(this.PATH_GET_CARE_TYPES);
     }
 
     addInstitution(institutionName, address, institutionType, careTypes) {
-        return axios.post(`${REST_SERVICE_URL}${this.PATH_GET_CARE_TYPES}`, {
-                responseType: 'json',
+        console.log('Adding new institution ' + institutionName);
+        console.log('Add care types: ' + careTypes);
+        return axios.post(`${REST_SERVICE_URL}${this.PATH_POST_ADD_INSTITUTION}`, {
+                name: institutionName,
+                address: address,
+                type: institutionType,
+                careTypes: careTypes
+            }, {
                 headers: {
                     authorization: AuthenticationService.getToken(),
                     'Content-Type': 'application/json'
                 }
             }
-        );
+        )
     }
 }
 

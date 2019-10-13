@@ -11,7 +11,7 @@ class AddInstitution extends Component {
             institutionName: "",
             address: "",
             institutionType: "",
-            careTypes: [],
+            careTypes: new Set(),
 
             institutionTypeOptions: [],
             careTypeOptions: [],
@@ -56,8 +56,15 @@ class AddInstitution extends Component {
     };
 
     handleCheckboxChange(event) {
+        let careTypes = this.state.careTypes;
+        if (event.target.checked === true) {
+            careTypes.add(event.target.value);
+        } else {
+            careTypes.delete(event.target.value);
+        }
+
         this.setState({
-            // [event.target.id]: event.target.isChecked;
+            careTypes: careTypes
         });
         let submitEnabledUpdate = this.isSubmitEnabledUpdate();
         this.setState({
@@ -78,7 +85,9 @@ class AddInstitution extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        InstitutionService.addInstitution(this.state.institutionName, this.state.address, this.state.institutionType, this.state.careTypes)
+        const careTypesArray = [...this.state.careTypes];
+        console.log(careTypesArray);
+        InstitutionService.addInstitution(this.state.institutionName, this.state.address, this.state.institutionType, careTypesArray)
             .then(response => {
                 console.log("Institution is added successfully!");
                 this.setState({
@@ -92,19 +101,32 @@ class AddInstitution extends Component {
                 isSubmissionSuccessful: false
             });
         });
+
+        this.resetForm()
     };
+
+    resetForm() {
+        this.setState({
+            institutionName: "",
+            address: "",
+            institutionType: "",
+            careTypes: new Set(),
+        });
+        document.getElementById("add-institution-form").reset();
+    }
 
     render() {
         let institutionTypes = this.state.institutionTypeOptions;
         let institutionTypeSearchItems = institutionTypes.map((institutionType) =>
-            <option key={institutionType.value}>{institutionType.description}</option>
+            <option key={institutionType.value} value={institutionType.value}>{institutionType.description}</option>
         );
 
         let careTypes = this.state.careTypeOptions;
         let careTypeItems = careTypes.map((careType) =>
             <tr>
                 <td className="checkbox-cell">
-                    <input type="checkbox" name={careType.description} value={careType.value} onChange={this.handleCheckboxChange}/>
+                    <input type="checkbox" name={careType.description} value={careType.value}
+                           onChange={this.handleCheckboxChange}/>
                 </td>
                 <td>
                     {careType.description}
@@ -115,8 +137,8 @@ class AddInstitution extends Component {
 
         return (
             <div>
-                <form className="main-form" onSubmit={this.handleSubmit}>
-                    <label>
+                <form id="add-institution-form" className="main-form" onSubmit={this.handleSubmit}>
+                    < label>
                         Intézmény neve:
                     </label>
                     <input id="institutionName"
@@ -134,7 +156,7 @@ class AddInstitution extends Component {
                         Intézmény jellege:
                     </label>
                     <select id="institutionType" onChange={this.handleChange}>
-        nChang          <option hidden disabled selected value> -- Válassza ki az intézmény jellegét --</option>
+                        nChang <option hidden disabled selected value> -- Válassza ki az intézmény jellegét --</option>
                         {institutionTypeSearchItems}
                     </select>
                     <label>
