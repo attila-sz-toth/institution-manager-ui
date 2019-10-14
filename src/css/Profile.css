@@ -39,9 +39,14 @@
     -webkit-transition: opacity .25s ease-in-out;
 }
 
-#profile-form button:hover {
+#profile-form button:hover:enabled {
     opacity: 1;
     cursor: pointer;
+}
+
+#profile-form button:disabled{
+    background: grey;
+    cursor: default;
 }
 
 .error-message {
@@ -49,6 +54,7 @@
     font-size: 12px;
     font-style: italic;
     margin-left: 15px;
+    margin-top: 5px;
 }
 
 .success-message {
@@ -56,4 +62,5 @@
     font-size: 12px;
     font-style: italic;
     margin-left: 15px;
+    margin-top: 5px;
 }

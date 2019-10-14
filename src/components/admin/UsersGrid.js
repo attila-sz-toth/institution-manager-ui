@@ -12,6 +12,7 @@ class UsersGrid extends Component {
             users: [],
             currentPage: 0,
             totalPages: 0,
+
             isDeleteFailed: false,
             isDeleteSuccessful: false
         };
@@ -25,11 +26,12 @@ class UsersGrid extends Component {
         UserAdminService.getUsers(pageNumber).then(response => {
             let rows = response.data.content.map(user => {
                 return (
-                    <tr key={user.institutionName}>
+                    <tr key={user.username}>
                         <td className="users-table-cell">{user.username}</td>
-                        <td className="users-table-cell">{user.role}</td>
-                        <td className="users-table-cell">{user.institutions}</td>
-                        <td><input type="button" value="Törlés" onClick={() => this.handleDelete(user.institutionName)}
+                        <td className="users-table-cell">{user.name}</td>
+                        <td className="users-table-cell">{user.role.description}</td>
+                        <td className="users-table-cell">{user.institution}</td>
+                        <td><input type="button" value="Törlés" onClick={() => this.handleDelete(user.username)}
                                    className="delete-button"/>
                         </td>
                     </tr>
@@ -50,14 +52,15 @@ class UsersGrid extends Component {
             .then(response => {
                 console.log("User is deleted successfully!");
                 this.setState({
-                    isSubmissionFailed: false,
-                    isSubmissionSuccessful: true
+                    isDeleteFailed: false,
+                    isDeleteSuccessful: true
                 });
-                this.loadUsers();
+                this.loadUsers(this.state.currentPage);
             }).catch(() => {
             console.log("User deletion failed!");
             this.setState({
-                isSubmissionFailed: true,
+                isDeleteFailed: true,
+                isDeleteSuccessful: false
             });
         });
     };
@@ -77,7 +80,7 @@ class UsersGrid extends Component {
             <span className="active">&laquo;</span> :
             <span onClick={() => this.loadUsers(this.state.currentPage - 1)}>&laquo;</span>;
 
-        let pagerNavigationForward = this.state.totalPages -1 === this.state.currentPage ?
+        let pagerNavigationForward = this.state.totalPages - 1 === this.state.currentPage ?
             <span className="active">&raquo;</span> :
             <span onClick={() => this.loadUsers(this.state.currentPage + 1)}>&raquo;</span>;
 
@@ -87,7 +90,8 @@ class UsersGrid extends Component {
                 <table className="users-table">
                     <thead>
                     <tr>
-                        <th className="users-table-header" id="e-mail">E-mail cím</th>
+                        <th className="users-table-header" id="e-mail">Felhasználónév (e-mail cím)</th>
+                        <th className="users-table-header" id="e-mail">Név</th>
                         <th className="users-table-header" id="role">Jogosultsági kör</th>
                         <th className="users-table-header" id="institution">Intézmény</th>
                         <th className="users-table-header" id="action">Művelet</th>

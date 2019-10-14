@@ -94,6 +94,8 @@ class AddInstitution extends Component {
                     isSubmissionFailed: false,
                     isSubmissionSuccessful: true
                 });
+
+                this.resetForm()
             }).catch(() => {
             console.log("Institution addition failed!");
             this.setState({
@@ -101,8 +103,6 @@ class AddInstitution extends Component {
                 isSubmissionSuccessful: false
             });
         });
-
-        this.resetForm()
     };
 
     resetForm() {

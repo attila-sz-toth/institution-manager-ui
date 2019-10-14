@@ -4,6 +4,7 @@ import '../css/Main.css';
 import '../css/Profile.css';
 import AuthenticationService from "../services/AuthenticationService";
 import UserService from "../services/UserProfileService";
+import UserAdminService from "../services/UserAdminService";
 
 class Profile extends Component {
     constructor(props) {
@@ -13,16 +14,37 @@ class Profile extends Component {
             newPassword: "",
             newPasswordAgain: "",
 
+            user: "",
+
             isPasswordValid: true,
             isPasswordsMatch: true,
             isError: false,
-            isSuccess: false
+            isSuccess: false,
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validatePasswords = this.validatePasswords.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
+
+    componentDidMount() {
+        this.loadUser(AuthenticationService.getUserName());
+    }
+
+    loadUser(username) {
+        UserAdminService.getUserByUserName(username).then(response => {
+            let user =
+                <tr key={response.data.username}>
+                    <td className="users-table-cell">{response.data.username}</td>
+                    <td className="users-table-cell">{response.data.name}</td>
+                    <td className="users-table-cell">{response.data.role.description}</td>
+                    <td className="users-table-cell">{response.data.institution}</td>
+                </tr>;
+            this.setState({
+                user: user
+            });
+        });
+    };
 
     validatePasswords() {
         this.setState({
@@ -64,23 +86,32 @@ class Profile extends Component {
         });
     };
 
+    isSubmitEnabled() {
+        return this.state.currentPassword.length > 0
+            && this.state.newPassword.length > 0
+            && this.state.newPasswordAgain.length > 0
+            && this.state.isPasswordValid
+            && this.state.isPasswordsMatch;
+    }
+
     render() {
         if (AuthenticationService.isUserLoggedIn()) {
+            let submitEnabled = this.isSubmitEnabled();
+
             return (
                 <div className="main-component">
                     <h3>Saját adatok</h3>
                     <table className="users-table">
                         <thead>
                         <tr>
-                            <th className="users-table-header">E-mail cím</th>
-                            <th className="users-table-header">Jogosultsági kör</th>
+                            <th className="users-table-header" id="e-mail">Felhasználónév (e-mail cím)</th>
+                            <th className="users-table-header" id="e-mail">Név</th>
+                            <th className="users-table-header" id="role">Jogosultsági kör</th>
+                            <th className="users-table-header" id="institution">Intézmény</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td className="users-table-cell">{AuthenticationService.getUserName()}</td>
-                            <td className="users-table-cell">{AuthenticationService.getRole()}</td>
-                        </tr>
+                        {this.state.user}
                         </tbody>
                     </table>
                     <h3>Jelszó Megváltoztatása</h3>
@@ -111,7 +142,7 @@ class Profile extends Component {
                         <label className="error-message">Érvénytelen jelszó</label>}
                         {!this.state.isPasswordsMatch &&
                         <label className="error-message">A beírt jelszavak nem egyeznek!</label>}
-                        <button type="submit">Jelszó megváltoztatása</button>
+                        <button type="submit" disabled={!submitEnabled}>Jelszó megváltoztatása</button>
                         {this.state.isError && <label className="error-message">Sikertelen jelszóváltoztatás!</label>}
                         {this.state.isSuccess && <label className="success-message">Sikeres jelszóváltoztatás!</label>}
                     </form>

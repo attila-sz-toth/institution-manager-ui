@@ -19,8 +19,8 @@ tr {
 }
 
 .users-table-header#e-mail {
-    min-width: 350px;
-    max-width: 500px;
+    min-width: 250px;
+    max-width: 250px;
 }
 
 .users-table-header#role {
@@ -29,8 +29,8 @@ tr {
 }
 
 .users-table-header#institution {
-    min-width: 350px;
-    max-width: 500px;
+    min-width: 250px;
+    max-width: 250px;
 }
 
 .users-table-cell {

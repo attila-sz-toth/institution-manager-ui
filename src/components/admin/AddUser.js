@@ -3,27 +3,28 @@ import UserAdminService from "../../services/UserAdminService";
 
 import '../../css/Main.css';
 import InstitutionService from "../../services/InstitutionService";
+import {ADMIN_ROLE, EMPLOYEE_ROLE} from "../../services/AuthenticationService";
 
 class AddUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: "",
+            name: "",
             role: "",
             institution: "",
 
-            roles: [],
-            institutions: [],
+            rolesOptions: [],
+            institutionOptions: [],
 
-            isUsernameValid: true,
-            isUserExist: false,
-            isSubmitEnabled: false,
-            isDeleteFailed: false,
-            isDeleteSuccessful: false
+            isUsernameValid: false,
+            isSubmissionFailed: false,
+            isSubmissionSuccessful: false
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleUsernameChange = this.handleUsernameChange.bind(this);
     }
 
     componentDidMount() {
@@ -34,37 +35,42 @@ class AddUser extends Component {
     loadRoles() {
         UserAdminService.getRoles().then(response => {
             let rows = response.data;
-            this.setState({roles: rows});
+            this.setState({rolesOptions: rows});
         });
     }
 
     loadInstitutions() {
-        InstitutionService.getInstitutions().then(response => {
-            let rows = response.data.map(institution => institution.institutionName);
-            this.setState({institutions: rows});
+        InstitutionService.getInstitutionNames().then(response => {
+            let rows = response.data;
+            this.setState({institutionOptions: rows});
         });
     }
 
     handleChange(event) {
-        let submitEnabledUpdate = this.isSubmitEnabledUpdate();
         this.setState({
             [event.target.id]: event.target.value,
-            isSubmitEnabled: submitEnabledUpdate,
         });
     };
 
-    isSubmitEnabledUpdate() {
-        return (this.state.isUsernameValid);
-    };
-
-    validateUserName(event) {
-        let isUsernameValidUpdate = AddUser.validateEmail(event.target.value);
+    handleUsernameChange(event) {
+        //check if user name exists
+        let isUsernameValidUpdate = this.validateEmail(event.target.value);
         this.setState({
-            isUsernameValid: isUsernameValidUpdate
+            [event.target.id]: event.target.value,
+            isUsernameValid: isUsernameValidUpdate,
         });
-    }
+    };
 
-    static validateEmail(email) {
+    isSubmitEnabled() {
+        let userNameValid = this.state.isUsernameValid;
+        let nameValid = this.state.name.length > 0;
+        let roleValid = this.state.role.length > 0;
+        let institutionValid = (this.state.role === ADMIN_ROLE) || this.state.institution.length > 0;
+
+        return (userNameValid && nameValid && roleValid && institutionValid);
+    };
+
+    validateEmail(email) {
         let regEx = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
         return email.length === 0 || regEx.test(String(email).toLowerCase());
     };
@@ -72,39 +78,61 @@ class AddUser extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        UserAdminService.addUser(this.state.username, this.state.role, this.state.institution)
+        UserAdminService.addUser(this.state.username, this.state.name, this.state.role, this.state.institution)
             .then(response => {
                 console.log("User registered successfully!");
                 this.setState({
                     isSubmissionFailed: false,
                     isSubmissionSuccessful: true
                 });
+
+                this.resetForm()
             }).catch(() => {
             console.log("User registration failed!");
             this.setState({
                 isSubmissionFailed: true,
+                isSubmissionSuccessful: false
             });
         });
     };
 
+    resetForm() {
+        this.setState({
+            username: "",
+            name: "",
+            role: "",
+            institution: "",
+        });
+        document.getElementById("add-user-form").reset();
+    }
+
     render() {
-        let roles = this.state.roles;
+        let roles = this.state.rolesOptions;
         let roleSearchItems = roles.map((role) =>
-            <option key={role}>{role}</option>
+            <option key={role.value} value={role.value}>{role.description}</option>
         );
 
-        let institutions = this.state.institutions;
+        let institutions = this.state.institutionOptions;
         let institutionSearchItems = institutions.map((institution) =>
-            <option key={institution}>{institution}</option>
+            <option key={institution} value={institution}>{institution}</option>
         );
+
+        let isSubmitEnabled = this.isSubmitEnabled();
 
         return (
             <div>
-                <form className="main-form" onSubmit={this.handleSubmit}>
+                <form id="add-user-form" className="main-form" onSubmit={this.handleSubmit}>
                     <label>
-                        E-mail cím:
+                        Felhasználónév (e-mail cím):
                     </label>
                     <input id="username"
+                           type="text"
+                           onChange={this.handleUsernameChange}
+                    />
+                    <label>
+                        Név:
+                    </label>
+                    <input id="name"
                            type="text"
                            onChange={this.handleChange}
                     />
@@ -113,22 +141,27 @@ class AddUser extends Component {
                     </label>
                     <select id="role"
                             onChange={this.handleChange}>
-                        <option hidden disabled selected value> -- Válassza ki a jogosultságot -- </option>
+                        <option hidden disabled selected value> -- Válassza ki a jogosultságot --</option>
                         {roleSearchItems}
                     </select>
-                    <label>
-                        Intézmény:
-                    </label>
-                    <select id="institution"
-                            onChange={this.handleChange}>
-                        <option hidden disabled selected value> -- Válassza ki az intézményt -- </option>
-                        {institutionSearchItems}
-                    </select>
+                    {
+                        this.state.role === EMPLOYEE_ROLE &&
+                        <div>
+                            <label>
+                                Intézmény:
+                            </label>
+                            <select id="institution"
+                                    onChange={this.handleChange}>
+                                <option hidden disabled selected value> -- Válassza ki az intézményt --</option>
+                                {institutionSearchItems}
+                            </select>
+                        </div>
+                    }
 
-                    <button type="submit" disabled={!this.state.isSubmitEnabled}>Új Felhasználó Hozzáadása</button>
-                    {this.state.isDeleteFailed &&
+                    <button type="submit" disabled={!isSubmitEnabled}>Új Felhasználó Hozzáadása</button>
+                    {this.state.isSubmissionFailed &&
                     <label className="error-message">Új felhasználó hozzáadása sikertelen!</label>}
-                    {this.state.isDeleteSuccessful &&
+                    {this.state.isSubmissionSuccessful &&
                     <label className="success-message">Új felhasználó sikeresen hozzáadva!</label>}
                 </form>
             </div>

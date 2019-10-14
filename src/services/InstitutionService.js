@@ -4,6 +4,7 @@ import AuthenticationService, {REST_SERVICE_URL} from "./AuthenticationService";
 class InstitutionService {
     PATH_BASE = '/institutions';
     PATH_GET_INSTITUTIONS = `${this.PATH_BASE}/get-institutions`;
+    PATH_GET_INSTITUTION_NAMES = `${this.PATH_BASE}/get-institution-names`;
     PATH_GET_INSTITUTION_TYPES = `${this.PATH_BASE}/get-institution-types`;
     PATH_GET_CARE_TYPES = `${this.PATH_BASE}/get-care-types`;
     PATH_POST_ADD_INSTITUTION = `${this.PATH_BASE}/add-institution`;
@@ -21,6 +22,10 @@ class InstitutionService {
 
     getInstitutions() {
         return this.simpleGet(this.PATH_GET_INSTITUTIONS);
+    }
+
+    getInstitutionNames() {
+        return this.simpleGet(this.PATH_GET_INSTITUTION_NAMES);
     }
 
     getInstitutionTypes() {
