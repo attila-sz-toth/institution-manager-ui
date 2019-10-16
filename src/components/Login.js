@@ -51,7 +51,8 @@ class Login extends Component {
         AuthenticationService
             .login(this.state.username, this.state.password)
             .then(response => {
-                AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password, response.data.role);
+                AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password,
+                    response.data.role, response.data.institution);
                 this.props.history.push(`/home`);
                 this.setState({
                     isSubmissionFailed: false,

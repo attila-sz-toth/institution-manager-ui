@@ -1,0 +1,40 @@
+.care-receiver-detail-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#care-receiver-detail-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#care-receiver-detail-close {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    padding-right: 2px;
+
+    text-decoration: none;
+
+    transition: color .25s ease-in-out;
+    -moz-transition: color .25s ease-in-out;
+    -webkit-transition: color .25s ease-in-out;
+}
+
+#care-receiver-detail-close:hover {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    text-decoration: none;
+    color: #CC3300;
+}
+
+.details-input {
+    background: #FFFFFF;
+    border: none;
+    width: 100%;
+    font-weight: 300;
+    color: #454c55;
+}

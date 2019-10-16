@@ -87,14 +87,14 @@ class UsersGrid extends Component {
         return (
 
             <div className="users-container">
-                <table className="users-table">
+                <table className="table-main">
                     <thead>
                     <tr>
-                        <th className="users-table-header" id="e-mail">Felhasználónév (e-mail cím)</th>
-                        <th className="users-table-header" id="e-mail">Név</th>
-                        <th className="users-table-header" id="role">Jogosultsági kör</th>
-                        <th className="users-table-header" id="institution">Intézmény</th>
-                        <th className="users-table-header" id="action">Művelet</th>
+                        <th className="table-main-header" id="e-mail">Felhasználónév (e-mail cím)</th>
+                        <th className="table-main-header" id="e-mail">Név</th>
+                        <th className="table-main-header" id="role">Jogosultsági kör</th>
+                        <th className="table-main-header" id="institution">Intézmény</th>
+                        <th className="table-main-header" id="action">Művelet</th>
                     </tr>
                     </thead>
                     <tbody>

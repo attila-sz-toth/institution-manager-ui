@@ -3,11 +3,11 @@ import AuthenticationService, {REST_SERVICE_URL} from "./AuthenticationService";
 
 class UserProfileService {
 
-    PATH_SET_PASSWORD = `set-password`;
+    PATH_SET_PASSWORD = `/user/set-password`;
 
     updatePassword(username, password, newPassword) {
         console.log('Updating password for user ' + username);
-        return axios.post(`${REST_SERVICE_URL}/${this.PATH_SET_PASSWORD}`,
+        return axios.post(`${REST_SERVICE_URL}${this.PATH_SET_PASSWORD}`,
             newPassword,
             {
                 headers: {

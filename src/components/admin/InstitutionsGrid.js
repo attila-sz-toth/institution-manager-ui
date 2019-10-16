@@ -63,12 +63,12 @@ class InstitutionsGrid extends Component {
         return (
 
             <div className="users-container">
-                <table className="users-table">
+                <table className="table-main">
                     <thead>
                     <tr>
-                        <th className="users-table-header" id="name">Intézmény Neve</th>
-                        <th className="users-table-header" id="institution-type">Intézmény Jellege</th>
-                        <th colSpan="2" className="users-table-header" id="action" >Műveletek</th>
+                        <th className="table-main-header" id="name">Intézmény Neve</th>
+                        <th className="table-main-header" id="institution-type">Intézmény Jellege</th>
+                        <th colSpan="2" className="table-main-header" id="action" >Műveletek</th>
                     </tr>
                     </thead>
                     <tbody>

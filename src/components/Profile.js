@@ -101,13 +101,13 @@ class Profile extends Component {
             return (
                 <div className="main-component">
                     <h3>Saját adatok</h3>
-                    <table className="users-table">
+                    <table className="table-main">
                         <thead>
                         <tr>
-                            <th className="users-table-header" id="e-mail">Felhasználónév (e-mail cím)</th>
-                            <th className="users-table-header" id="e-mail">Név</th>
-                            <th className="users-table-header" id="role">Jogosultsági kör</th>
-                            <th className="users-table-header" id="institution">Intézmény</th>
+                            <th className="table-main-header" id="e-mail">Felhasználónév (e-mail cím)</th>
+                            <th className="table-main-header" id="e-mail">Név</th>
+                            <th className="table-main-header" id="role">Jogosultsági kör</th>
+                            <th className="table-main-header" id="institution">Intézmény</th>
                         </tr>
                         </thead>
                         <tbody>

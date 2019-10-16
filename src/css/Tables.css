@@ -2,14 +2,13 @@ tr {
     overflow-x: scroll;
 }
 
-.users-table {
+.table-main {
     width: 1000px;
     border-collapse: separate;
     border-spacing: 2px;
-
 }
 
-.users-table-header {
+.table-main-header {
     background: #f2f2f2;
     font-family: "Roboto", sans-serif;
     text-align: left;
@@ -18,24 +17,60 @@ tr {
     border: 1px solid #ddd;
 }
 
-.users-table-header#e-mail {
+.table-main-header#e-mail {
     min-width: 250px;
     max-width: 250px;
 }
 
-.users-table-header#role {
+.table-main-header#role {
     min-width: 120px;
     max-width: 120px;
 }
 
-.users-table-header#institution {
+.table-main-header#institution {
     min-width: 250px;
     max-width: 250px;
+}
+
+.table-main-header#care-receiver-name {
+    min-width: 300px;
+    max-width: 300px;
+}
+
+.table-main-header#care-receiver-birth-date {
+    min-width: 110px;
+    max-width: 110px;
+}
+
+.table-main-header#care-receiver-name-mothers-name {
+    min-width: 200px;
+    max-width: 200px;
 }
 
 .users-table-cell {
     padding-left: 10px;
 }
+
+table.care-types {
+    padding-top: 5px;
+}
+
+.institution-details-header {
+    width: 250px;
+}
+
+.institution-details-content {
+    font-family: "Roboto", sans-serif;
+    text-align: left;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
+
+
+
+
+
 
 .main-form button:disabled {
     background: grey;
@@ -117,8 +152,4 @@ tr {
 .checkbox-cell {
     width: 20px;
     height: 30px;
-}
-
-table.care-types {
-    padding-top: 5px;
 }

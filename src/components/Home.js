@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Route} from "react-router-dom";
 import AdminHome from "./admin/AdminHome";
-import EmployeeHome from "./EmployeeHome";
+import EmployeeHome from "./employee/EmployeeHome";
 import AuthenticationService, {ADMIN_ROLE, EMPLOYEE_ROLE} from '../services/AuthenticationService'
 
 class Home extends Component {

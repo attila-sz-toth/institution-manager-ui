@@ -3,10 +3,11 @@ import base64 from "react-native-base64";
 
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'username';
 export const ROLE_SESSION_ATTRIBUTE_NAME = 'role';
+export const INSTITUTION_SESSION_ATTRIBUTE_NAME = 'institution';
+export const TOKEN = 'TOKEN';
 export const ADMIN_ROLE = 'ADMIN';
 export const EMPLOYEE_ROLE = 'EMPLOYEE';
 export const REST_SERVICE_URL = 'http://localhost:8080';
-export const TOKEN = 'TOKEN';
 
 class AuthenticationService {
 
@@ -21,9 +22,10 @@ class AuthenticationService {
             })
     }
 
-    registerSuccessfulLogin(username, password, role) {
+    registerSuccessfulLogin(username, password, role, institution) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username);
         sessionStorage.setItem(ROLE_SESSION_ATTRIBUTE_NAME, role);
+        sessionStorage.setItem(INSTITUTION_SESSION_ATTRIBUTE_NAME, institution);
         sessionStorage.setItem(TOKEN, this.createBasicAuthToken(username, password));
 
         this.setupAxiosInterceptors(this.createBasicAuthToken(username, password));
@@ -68,6 +70,11 @@ class AuthenticationService {
     getToken() {
         let token = sessionStorage.getItem(TOKEN);
         return token === null ? '' : token;
+    }
+
+    getInstitution() {
+        let institution = sessionStorage.getItem(INSTITUTION_SESSION_ATTRIBUTE_NAME);
+        return institution === null ? '' : institution;
     }
 }
 
