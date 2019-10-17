@@ -121,7 +121,6 @@ class CareReceiversGrid extends Component {
                     {pagerArray}
                     {pagerNavigationForward}
                 </div>
-
                 {
                     this.state.isDetailsActive &&
                     <div>
