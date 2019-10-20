@@ -67,11 +67,6 @@ table.care-types {
     border: 1px solid #ddd;
 }
 
-
-
-
-
-
 .main-form button:disabled {
     background: grey;
     cursor: default;
@@ -80,7 +75,7 @@ table.care-types {
 .delete-button {
     text-transform: uppercase;
     outline: 0;
-    background: #CC3300;
+    background: #D71921;
     width: 100%;
     border: 0;
     padding: 5px;
@@ -101,7 +96,7 @@ table.care-types {
 .edit-button {
     text-transform: uppercase;
     outline: 0;
-    background: #FF851B;
+    background: #2561AE;
     width: 100%;
     border: 0;
     padding: 5px;
@@ -121,7 +116,11 @@ table.care-types {
 
 .pagination {
     margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
+
 .pagination span {
     cursor: pointer;
     color: black;

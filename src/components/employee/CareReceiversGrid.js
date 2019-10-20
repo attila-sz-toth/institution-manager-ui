@@ -40,7 +40,7 @@ class CareReceiversGrid extends Component {
                         <td><input type="button" value="Adatok Megtekintése"
                                    onClick={() => this.loadDetails(careReceiver.firstName, careReceiver.lastName,
                                        careReceiver.mothersName, careReceiver.birthDate)}
-                                   className="delete-button"/>
+                                   className="edit-button"/>
                         </td>
                     </tr>
                 );

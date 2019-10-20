@@ -28,7 +28,7 @@
     flex-direction: row;
     justify-content: flex-end;
     text-decoration: none;
-    color: #CC3300;
+    color: #D71921;
 }
 
 .care-receiver-details input {
@@ -75,13 +75,44 @@
 }
 
 .care-receiver-details button#button-modify {
-    background: #FF851B;
+    background: #2561AE;
 }
 
 .care-receiver-details button#button-delete {
-    background: #CC3300;
+    background: #D71921;
 }
 
 .button-panel {
     text-align: center;
+}
+
+.add-care-receiver-header {
+    clear: both;
+    width: 500px;
+}
+
+.add-care-receiver-title {
+    margin-bottom: 6px;
+}
+
+.add-care-receiver-warning {
+    margin-top: 0px;
+    margin-bottom: 12px;
+    padding: 0;
+    color: red;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.mandatory {
+    color: red;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.hint {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
 }

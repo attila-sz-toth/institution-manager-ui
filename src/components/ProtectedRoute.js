@@ -10,7 +10,9 @@ class ProtectedRoute extends Component {
             return (
                 <div id="protected-route-container">
                     <Navigation/>
-                    <Route {...this.props}/>
+                    <div className="main-content">
+                        <Route {...this.props}/>
+                    </div>
                 </div>
             );
         } else {

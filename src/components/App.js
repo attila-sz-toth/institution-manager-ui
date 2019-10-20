@@ -8,6 +8,7 @@ import Home from "./Home";
 import Profile from "./Profile";
 import AdminInstitution from "./admin/AdminInstitution";
 import CareReceivers from "./employee/CareReceivers";
+import AddCareReceiver from "./admin/AddCareReceiver";
 
 
 class App extends Component {
@@ -24,6 +25,7 @@ class App extends Component {
                         <ProtectedRoute path="/admin-institution" exact component={AdminInstitution}/>
                         <ProtectedRoute path="/employee-home" exact component={EmployeeHome}/>
                         <ProtectedRoute path="/care-receivers" exact component={CareReceivers}/>
+                        <ProtectedRoute path="/add-care-receiver" exact component={AddCareReceiver}/>
                         <Route path="/login" exact component={Login}/>
                     </Switch>
                 </Router>
