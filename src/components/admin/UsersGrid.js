@@ -69,20 +69,20 @@ class UsersGrid extends Component {
 
         let pagerArray = new Array(this.state.totalPages).fill(0).map((zero, index) => {
                 if (this.state.currentPage === (index)) {
-                    return <span className="active">{index + 1}</span>
+                    return <div className="active">{index + 1}</div>
                 } else {
-                    return <span onClick={() => this.loadUsers(index)}>{index + 1}</span>
+                    return <div onClick={() => this.loadUsers(index)}>{index + 1}</div>
                 }
             }
         );
 
         let pagerNavigationBack = 0 === this.state.currentPage ?
-            <span className="active">&laquo;</span> :
-            <span onClick={() => this.loadUsers(this.state.currentPage - 1)}>&laquo;</span>;
+            <div className="active">&laquo;</div> :
+            <div onClick={() => this.loadUsers(this.state.currentPage - 1)}>&laquo;</div>;
 
         let pagerNavigationForward = this.state.totalPages - 1 === this.state.currentPage ?
-            <span className="active">&raquo;</span> :
-            <span onClick={() => this.loadUsers(this.state.currentPage + 1)}>&raquo;</span>;
+            <div className="active">&raquo;</div> :
+            <div onClick={() => this.loadUsers(this.state.currentPage + 1)}>&raquo;</div>;
 
         return (
 

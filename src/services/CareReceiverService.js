@@ -65,14 +65,14 @@ class CareReceiverService {
             {
                 headers: {
                     authorization: AuthenticationService.getToken(),
-                    'Content-Type': 'text/plain'
+                    'Content-Type': 'application/json'
                 }
             })
     }
 
     addCareReceiver(state) {
         console.log('Add care receiver ' + state.firstName + " " + state.lastName);
-        return axios.put(`${REST_SERVICE_URL}${this.PATH_GET_ADD}`,
+        return axios.post(`${REST_SERVICE_URL}${this.PATH_GET_ADD}`,
             {
                 title: state.title,
                 firstName: state.firstName,
@@ -86,16 +86,16 @@ class CareReceiverService {
                 address: state.address,
                 phoneNumber: state.phoneNumber,
                 email: state.email,
-                careStatus: state.careStatus,
-                institutionName: state.institutionName,
+                careStatus: "ACTIVE",
+                institutionName: AuthenticationService.getInstitution(),
                 taj: state.taj,
-                startOfCare: state.startOfCare,
-                endOfCare: state.endOfCare
+                startOfCare: new Date().toLocaleDateString('ko-KR'),
+                endOfCare: null
             },
             {
                 headers: {
                     authorization: AuthenticationService.getToken(),
-                    'Content-Type': 'text/plain'
+                    'Content-Type': 'application/json'
                 }
             })
     }

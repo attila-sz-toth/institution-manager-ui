@@ -119,9 +119,12 @@ table.care-types {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
 }
 
-.pagination span {
+.pagination div {
     cursor: pointer;
     color: black;
     float: left;
@@ -133,14 +136,14 @@ table.care-types {
     border: 1px solid #ddd;
 }
 
-.pagination span.active {
+.pagination div.active {
     font-weight: bold;
     border: 1px solid #ddd;
     opacity: 0.5;
     cursor: default;
 }
 
-.pagination span:hover {
+.pagination div:hover {
     background-color: #f2f2f2;
     font-weight: bold;
     border: 1px solid #ddd;

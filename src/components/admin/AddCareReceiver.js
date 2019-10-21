@@ -33,6 +33,7 @@ class AddCareReceiver extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmitWaitingList = this.handleSubmitWaitingList.bind(this);
     }
 
     componentDidMount() {
@@ -54,23 +55,25 @@ class AddCareReceiver extends Component {
 
     isSubmitEnabled() {
         let firstNameValid = this.state.firstName.length > 0;
-        let lastNameValid = this.state.lastName > 0;
+        let lastNameValid = this.state.lastName.length > 0;
         let mothersNameValid = this.state.mothersName.length > 0;
         let birthDateValid = this.state.birthDate.length > 0;
         let birthNameValid = this.state.birthName.length > 0;
         let birthPlaceValid = this.state.birthPlace.length > 0;
         let sexValid = this.state.sex.length > 0;
         let addressValid = this.state.address.length > 0;
+        let tajValid = this.state.taj.length > 0;
 
         return (
-            firstNameValid &&
-            lastNameValid &&
-            mothersNameValid &&
-            birthDateValid &&
-            birthNameValid &&
-            birthPlaceValid &&
-            sexValid &&
-            addressValid
+            firstNameValid
+            && lastNameValid
+            && mothersNameValid
+            && birthDateValid
+            && birthNameValid
+            && birthPlaceValid
+            && sexValid
+            && addressValid
+            && tajValid
         );
     };
 
@@ -94,6 +97,10 @@ class AddCareReceiver extends Component {
             });
         });
     };
+
+    handleSubmitWaitingList() {
+
+    }
 
     resetForm() {
         this.setState({
@@ -133,13 +140,13 @@ class AddCareReceiver extends Component {
                     <h6 className="add-care-receiver-warning">A * -gal jelölt mezők kitöltése kötelező</h6>
                 </div>
 
-                <form id="add-care-receiver-form" className="main-form" onSubmit={this.handleSubmit}>
+                <form id="add-care-receiver-form" className="main-form">
                     <label>
                         Titulus:
                     </label>
                     <input id="title"
                            type="text"
-                           onChange={this.handleUsernameChange}
+                           onChange={this.handleChange}
                     />
                     <label>
                         Vezetéknév:
@@ -147,22 +154,22 @@ class AddCareReceiver extends Component {
                     <label className="mandatory">*</label>
                     <input id="lastName"
                            type="text"
-                           onChange={this.handleUsernameChange}
+                           onChange={this.handleChange}
                     />
                     <label>
                         Keresztnév:
                     </label>
+                    <label className="mandatory">*</label>
                     <input id="firstName"
                            type="text"
-                           onChange={this.handleUsernameChange}
+                           onChange={this.handleChange}
                     />
                     <label>
                         2. Keresztnév:
                     </label>
-                    <label className="mandatory">*</label>
                     <input id="middleName"
                            type="text"
-                           onChange={this.handleUsernameChange}
+                           onChange={this.handleChange}
                     />
                     <label>
                         Anyja neve:
@@ -170,7 +177,7 @@ class AddCareReceiver extends Component {
                     <label className="mandatory">*</label>
                     <input id="mothersName"
                            type="text"
-                           onChange={this.handleUsernameChange}
+                           onChange={this.handleChange}
                     />
                     <label>
                         Születési dátum:
@@ -179,7 +186,7 @@ class AddCareReceiver extends Component {
                     <label className="mandatory">*</label>
                     <input id="birthDate"
                            type="text"
-                           onChange={this.handleUsernameChange}
+                           onChange={this.handleChange}
                     />
                     <label>
                         Születési név:
@@ -187,7 +194,7 @@ class AddCareReceiver extends Component {
                     <label className="mandatory">*</label>
                     <input id="birthName"
                            type="text"
-                           onChange={this.handleUsernameChange}
+                           onChange={this.handleChange}
                     />
                     <label>
                         Születési hely:
@@ -195,7 +202,7 @@ class AddCareReceiver extends Component {
                     <label className="mandatory">*</label>
                     <input id="birthPlace"
                            type="text"
-                           onChange={this.handleUsernameChange}
+                           onChange={this.handleChange}
                     />
                     <label>
                         Nem:
@@ -212,21 +219,21 @@ class AddCareReceiver extends Component {
                     <label className="mandatory">*</label>
                     <input id="address"
                            type="text"
-                           onChange={this.handleUsernameChange}
+                           onChange={this.handleChange}
                     />
                     <label>
                         Telefonszám:
                     </label>
                     <input id="phoneNumber"
                            type="text"
-                           onChange={this.handleUsernameChange}
+                           onChange={this.handleChange}
                     />
                     <label>
                         E-mail:
                     </label>
                     <input id="email"
                            type="text"
-                           onChange={this.handleUsernameChange}
+                           onChange={this.handleChange}
                     />
                     <label>
                         TAJ:
@@ -234,11 +241,12 @@ class AddCareReceiver extends Component {
                     <label className="mandatory">*</label>
                     <input id="taj"
                            type="text"
-                           onChange={this.handleUsernameChange}
+                           onChange={this.handleChange}
                     />
 
 
-                    <button type="submit" disabled={!isSubmitEnabled}>Új Ellátott Hozzáadása</button>
+                    <button type="button" disabled={!isSubmitEnabled} onClick={this.handleSubmit}>Ellátott Felvétele</button>
+                    <button type="button" disabled={!isSubmitEnabled} onClick={this.handleSubmitWaitingList}>Ellátott Várólistára Vétele</button>
                     {this.state.isSubmissionFailed &&
                     <label className="error-message">Új ellátott hozzáadása sikertelen!</label>}
                     {this.state.isSubmissionSuccessful &&

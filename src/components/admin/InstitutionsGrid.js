@@ -68,7 +68,7 @@ class InstitutionsGrid extends Component {
                     <tr>
                         <th className="table-main-header" id="name">Intézmény Neve</th>
                         <th className="table-main-header" id="institution-type">Intézmény Jellege</th>
-                        <th colSpan="2" className="table-main-header" id="action" >Műveletek</th>
+                        <th coldiv="2" className="table-main-header" id="action" >Műveletek</th>
                     </tr>
                     </thead>
                     <tbody>
