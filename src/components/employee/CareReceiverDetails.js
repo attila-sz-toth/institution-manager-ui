@@ -30,15 +30,6 @@ class CareReceiverDetails extends Component {
         this.loadCareReceiverDetails = this.loadCareReceiverDetails.bind(this);
     }
 
-    refreshComponent(firstName, lastName, mothersName, birthDate) {
-        this.setState({
-            firstName: firstName,
-            lastName: lastName,
-            mothersName: mothersName,
-            birthDate: birthDate,
-        })
-    }
-
     componentWillMount() {
         this.loadCareReceiverDetails(this.state.firstName, this.state.lastName, this.state.mothersName, this.state.birthDate);
     }
@@ -54,7 +45,7 @@ class CareReceiverDetails extends Component {
                 birthDate: response.data.birthDate,
                 birthName: response.data.birthName,
                 birthPlace: response.data.birthPlace,
-                sex: response.data.sex.description,
+                sex: response.data.sex,
                 address: response.data.address,
                 phoneNumber: response.data.phoneNumber,
                 email: response.data.email,
@@ -86,7 +77,7 @@ class CareReceiverDetails extends Component {
 
         return (
             <div>
-                <form className="care-receiver-details" onSubmit={CareReceiverService.update(this.state)}>
+                <form className="care-receiver-details">
                     <table className="table-main institution-details">
                         <tr>
                             <th className="table-main-header institution-details-header">Titulus</th>
@@ -195,13 +186,15 @@ class CareReceiverDetails extends Component {
                         <tr>
                             <th className="table-main-header institution-details-header">Nem</th>
                             <td className="institution-details-content">
-                                <input id="sex"
-                                       className="details-input"
-                                       type="text"
-                                       onChange={this.handleChange}
-                                       value={this.state.sex}
-                                       disabled={this.state.isDisabled}
-                                />
+                                {
+                                    <input id="sex"
+                                           className="details-input"
+                                           type="text"
+                                           onChange={this.handleChange}
+                                           value={this.state.sex.description}
+                                           disabled={true}
+                                    />
+                                }
                             </td>
                         </tr>
 
@@ -270,29 +263,33 @@ class CareReceiverDetails extends Component {
                             </td>
                         </tr>
 
-                        <tr>
-                            <th className="table-main-header institution-details-header">Ellátás vége</th>
-                            <td className="institution-details-content">
-                                <input id="endOfCare"
-                                       className="details-input"
-                                       type="text"
-                                       onChange={this.handleChange}
-                                       value={this.state.endOfCare}
-                                       disabled={true}
-                                />
-                            </td>
-                        </tr>
+                        {
+                            this.state.careStatus === "TERMINATED" &&
+                            <tr>
+                                <th className="table-main-header institution-details-header">Ellátás vége</th>
+                                <td className="institution-details-content">
+                                    <input id="endOfCare"
+                                           className="details-input"
+                                           type="text"
+                                           onChange={this.handleChange}
+                                           value={this.state.endOfCare}
+                                           disabled={true}
+                                    />
+                                </td>
+                            </tr>
+                        }
                     </table>
                     <div className="button-panel">
                         {
+                            this.state.careStatus !== "TERMINATED" &&
                             this.state.isDisabled &&
                             <button type="button" id="button-modify"
                                     onClick={() => this.setState({
                                         isDisabled: false,
-                                        backupFirstName: this.firstName,
-                                        backupLastName: this.lastName,
-                                        backupMothersName: this.mothersName,
-                                        backupBirthDate: this.birthDate,
+                                        backupFirstName: this.state.firstName,
+                                        backupLastName: this.state.lastName,
+                                        backupMothersName: this.state.mothersName,
+                                        backupBirthDate: this.state.birthDate,
                                     })}>Módosítás
                             </button>
                         }
@@ -314,9 +311,40 @@ class CareReceiverDetails extends Component {
                         }
                         {
                             !this.state.isDisabled &&
-                            <button type="submit" id="button-save" disabled={!isSubmitAllowed}>Mentés</button>
+                            <button type="button" id="button-save" disabled={!isSubmitAllowed}
+                                    onClick={() => {
+                                        CareReceiverService.update(this.state);
+                                        this.setState({
+                                            isDisabled: true,
+                                            backupFirstName: undefined,
+                                            backupLastName: undefined,
+                                            backupMothersName: undefined,
+                                            backupBirthDate: undefined,
+                                        });
+                                    }}>Mentés</button>
                         }
-                        <button type="button" id="button-delete">Ellátás megszűntetése</button>
+                        {
+                            this.state.careStatus === "ACTIVE" &&
+                            <button type="button" id="button-delete" onClick={() => {
+                                CareReceiverService.terminate(this.state);
+                            }
+                            }>Ellátás megszűntetése</button>
+                        }
+                        {
+                            this.state.careStatus === "WAITING" &&
+                            <button type="button" id="button-save" onClick={() => {
+                                CareReceiverService.startCare(this.state);
+                            }
+                            }>Ellátás megkezdése</button>
+                        }
+                        {
+                            this.state.careStatus === "WAITING" &&
+                            <button type="button" id="button-delete" onClick={() => {
+                                CareReceiverService.delete(this.state.firstName, this.state.lastName,
+                                    this.state.mothersName, this.state.birthDate);
+                            }
+                            }>Törlés várólistáról</button>
+                        }
                     </div>
                 </form>
             </div>

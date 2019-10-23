@@ -31,9 +31,7 @@ class AddCareReceiver extends Component {
             isSubmissionSuccessful: false
         };
 
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmitWaitingList = this.handleSubmitWaitingList.bind(this);
     }
 
     componentDidMount() {
@@ -77,10 +75,10 @@ class AddCareReceiver extends Component {
         );
     };
 
-    handleSubmit(event) {
+    handleSubmit(event, careStatus, startOfCare) {
         event.preventDefault();
 
-        CareReceiverService.addCareReceiver(this.state)
+        CareReceiverService.addCareReceiver(this.state, careStatus, startOfCare)
             .then(response => {
                 console.log("Care receiver registered successfully!");
                 this.setState({
@@ -97,10 +95,6 @@ class AddCareReceiver extends Component {
             });
         });
     };
-
-    handleSubmitWaitingList() {
-
-    }
 
     resetForm() {
         this.setState({
@@ -245,8 +239,14 @@ class AddCareReceiver extends Component {
                     />
 
 
-                    <button type="button" disabled={!isSubmitEnabled} onClick={this.handleSubmit}>Ellátott Felvétele</button>
-                    <button type="button" disabled={!isSubmitEnabled} onClick={this.handleSubmitWaitingList}>Ellátott Várólistára Vétele</button>
+                    <button type="button" disabled={!isSubmitEnabled}
+                            onClick={(event) => this.handleSubmit(event, "ACTIVE", new Date().toLocaleDateString('ko-KR'))}>
+                        Ellátott Felvétele
+                    </button>
+                    <button type="button" disabled={!isSubmitEnabled}
+                            onClick={(event) => this.handleSubmit(event, "WAITING", null)}>
+                        Ellátott Várólistára Vétele
+                    </button>
                     {this.state.isSubmissionFailed &&
                     <label className="error-message">Új ellátott hozzáadása sikertelen!</label>}
                     {this.state.isSubmissionSuccessful &&

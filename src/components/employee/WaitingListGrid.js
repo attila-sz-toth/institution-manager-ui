@@ -8,7 +8,7 @@ import CareReceiverService from "../../services/CareReceiverService";
 import AuthenticationService from "../../services/AuthenticationService";
 import CareReceiverDetails from "./CareReceiverDetails";
 
-class CareReceiversGrid extends Component {
+class WaitingListGrid extends Component {
     constructor(props) {
         super(props);
         this.careReceiverDetails = React.createRef();
@@ -30,7 +30,7 @@ class CareReceiversGrid extends Component {
     }
 
     loadCareReceivers(pageNumber, institutionName) {
-        CareReceiverService.getCareReceiversByInstitution(pageNumber, institutionName).then(response => {
+        CareReceiverService.getWaitingListByInstitution(pageNumber, institutionName).then(response => {
             let rows = response.data.content.map(careReceiver => {
                 return (
                     <tr key={careReceiver.careReceivername}>
@@ -144,4 +144,4 @@ class CareReceiversGrid extends Component {
     }
 }
 
-export default CareReceiversGrid;
+export default WaitingListGrid;

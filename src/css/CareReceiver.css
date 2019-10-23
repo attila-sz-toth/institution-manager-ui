@@ -21,6 +21,7 @@
     transition: color .25s ease-in-out;
     -moz-transition: color .25s ease-in-out;
     -webkit-transition: color .25s ease-in-out;
+
 }
 
 #care-receiver-detail-close:hover {
@@ -61,6 +62,7 @@
 }
 
 .care-receiver-details button:hover:enabled {
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
     opacity: 1;
     cursor: pointer;
 }
