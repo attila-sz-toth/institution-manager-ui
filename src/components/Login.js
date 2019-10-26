@@ -83,7 +83,6 @@ class Login extends Component {
                                onChange={this.handleChange}
                                placeholder="Jelszó"/>
                         <button type="submit" disabled={!this.state.isSubmitEnabled}>Bejelentkezés</button>
-                        <a className="form-link" href="?">Elfelejtettem a jelszavam!</a>
                         {this.state.isLoginFailed &&
                         <label className="error-message">Hibás felhasználónév vagy jelszó!</label>}
                     </form>

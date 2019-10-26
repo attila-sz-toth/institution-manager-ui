@@ -245,7 +245,7 @@ class AddCareReceiver extends Component {
                     </button>
                     <button type="button" disabled={!isSubmitEnabled}
                             onClick={(event) => this.handleSubmit(event, "WAITING", null)}>
-                        Ellátott Várólistára Vétele
+                        Ellátott Felvétele Várólistára
                     </button>
                     {this.state.isSubmissionFailed &&
                     <label className="error-message">Új ellátott hozzáadása sikertelen!</label>}

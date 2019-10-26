@@ -11,6 +11,11 @@ class CareReceiverService {
     PATH_GET_SEXES = `${this.PATH_BASE}/get-sexes`;
     PATH_GET_ADD = `${this.PATH_BASE}/add-care-receiver`;
     PATH_DELETE = `${this.PATH_BASE}/delete`;
+    PATH_COUNT_CARE_RECEIVERS = `${this.PATH_BASE}/count-care-receivers`;
+    PATH_COUNT_WAITING_LIST = `${this.PATH_BASE}/count-waiting-list`;
+    PATH_COUNT_ARCHIVE = `${this.PATH_BASE}/count-archive`;
+    PATH_COUNT_CARE_RECEIVERS_DATE = `${this.PATH_BASE}/count-care-receivers-date`;
+    PATH_NORMATIVE_YEAR = `${this.PATH_BASE}/normative-year`;
 
 
     simpleGet(path) {
@@ -138,6 +143,41 @@ class CareReceiverService {
             })
     }
 
+    countCareReceivers() {
+        let institution = AuthenticationService.getInstitution();
+        console.log("Count care receivers of institution " + institution);
+        return this.simpleGet(this.PATH_COUNT_CARE_RECEIVERS + '/' + institution)
+    }
+
+    countWaitingList() {
+        let institution = AuthenticationService.getInstitution();
+        console.log("Get waiting list size of institute " + institution);
+        return this.simpleGet(this.PATH_COUNT_WAITING_LIST + '/' + institution)
+    }
+
+    countArchive() {
+        let institution = AuthenticationService.getInstitution();
+        console.log("Get archive size of institute " + institution);
+        return this.simpleGet(this.PATH_COUNT_ARCHIVE + '/' + institution)
+    }
+
+    normativeByYear(date) {
+        let institution = AuthenticationService.getInstitution();
+        return this.simpleGet(this.PATH_NORMATIVE_YEAR + '/' + institution + '/'
+            + date.toLocaleDateString('hu-HU', {year: 'numeric'}));
+    }
+
+    countCareReceiversByDate(careReceiverFromDate, careReceiverToDate) {
+        let institution = AuthenticationService.getInstitution();
+        return this.simpleGet(this.PATH_COUNT_CARE_RECEIVERS_DATE + '/' + institution
+            + '/' + careReceiverFromDate.toLocaleDateString('hu-HU', {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric'
+            })
+            + '/' + careReceiverToDate.toLocaleDateString('hu-HU', {year: 'numeric', month: 'numeric', day: 'numeric'})
+        );
+    }
 }
 
 export default new CareReceiverService()

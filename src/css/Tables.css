@@ -59,6 +59,15 @@ table.care-types {
     width: 250px;
 }
 
+.statistics-header {
+    padding-top: 6px;
+    min-width: 250px;
+    display: inline-flex;
+    justify-content: space-between;
+    font-weight: normal;
+    font-style: italic;
+}
+
 .institution-details-content {
     font-family: "Roboto", sans-serif;
     text-align: left;
@@ -154,4 +163,8 @@ table.care-types {
 .checkbox-cell {
     width: 20px;
     height: 30px;
+}
+
+.institution-details-care-types {
+    list-style-type: none;
 }

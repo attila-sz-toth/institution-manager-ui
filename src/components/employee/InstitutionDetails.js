@@ -31,7 +31,7 @@ class InstitutionDetails extends Component {
     render() {
         let types = this.state.careTypes;
         let careTypesFormatted = types.map((careType) =>
-            <li>{careType.description}</li>
+            <li className="institution-details-care-types">{careType.description}</li>
         );
 
         return (
@@ -78,4 +78,3 @@ class InstitutionDetails extends Component {
 }
 
 export default InstitutionDetails;
-;
