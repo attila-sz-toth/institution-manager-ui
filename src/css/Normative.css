@@ -1,0 +1,20 @@
+.normative-container {
+    display: flex;
+}
+
+.add-normative-container {
+    /*margin-left: 12px;*/
+}
+
+.normative-grid-container {
+    margin-left: 12px;
+}
+
+.normative-tittle {
+    font-style: italic;
+    margin-top: 0px;
+}
+
+.normative-grid-content {
+    text-align: right;
+}

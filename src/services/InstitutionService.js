@@ -9,6 +9,7 @@ class InstitutionService {
     PATH_GET_INSTITUTION_TYPES = `${this.PATH_BASE}/get-institution-types`;
     PATH_GET_CARE_TYPES = `${this.PATH_BASE}/get-care-types`;
     PATH_POST_ADD_INSTITUTION = `${this.PATH_BASE}/add-institution`;
+    PATH_DELETE_INSTITUTION = `${this.PATH_BASE}/delete-institution`;
 
     simpleGet(path) {
         return axios.get(`${REST_SERVICE_URL}${path}`, {
@@ -56,6 +57,17 @@ class InstitutionService {
                 }
             }
         )
+    }
+
+    delete(institutionName) {
+        return axios.delete(`${REST_SERVICE_URL}${this.PATH_DELETE_INSTITUTION}/${institutionName}`, {
+                responseType: 'json',
+                headers: {
+                    authorization: AuthenticationService.getToken(),
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
     }
 }
 

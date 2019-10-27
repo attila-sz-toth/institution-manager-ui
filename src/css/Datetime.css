@@ -252,3 +252,16 @@ td.rdtYear:hover {
     font-weight: bold;
     text-align: left;
 }
+
+.institution-details-header .form-control {
+    min-width: 50px;
+    max-width: 100px;
+    background: #f2f2f2;
+    cursor: pointer;
+    border: 1px solid rgba(66, 139, 202, .2);
+    color: #454c55;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}

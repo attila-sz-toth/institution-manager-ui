@@ -45,8 +45,8 @@ class InstitutionsGrid extends Component {
         });
     }
 
-    handleDelete(username) {
-        InstitutionService.deleteUser(username)
+    handleDelete(institutionName) {
+        InstitutionService.delete(institutionName)
             .then(response => {
                 console.log("Institution is deleted successfully!");
                 this.setState({
