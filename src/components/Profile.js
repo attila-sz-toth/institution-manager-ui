@@ -42,7 +42,9 @@ class Profile extends Component {
                 </tr>;
             this.setState({
                 user: user
-            });
+            })
+        }).catch(() => {
+            console.log("Failed to get user: " + username);
         });
     };
 
@@ -84,7 +86,8 @@ class Profile extends Component {
             });
             document.getElementById("profile-form").reset();
         });
-    };
+    }
+    ;
 
     isSubmitEnabled() {
         return this.state.currentPassword.length > 0
@@ -143,8 +146,10 @@ class Profile extends Component {
                         {!this.state.isPasswordsMatch &&
                         <label className="error-message">A beírt jelszavak nem egyeznek!</label>}
                         <button type="submit" disabled={!submitEnabled}>Jelszó megváltoztatása</button>
-                        {this.state.isError && <label className="error-message">Sikertelen jelszóváltoztatás!</label>}
-                        {this.state.isSuccess && <label className="success-message">Sikeres jelszóváltoztatás!</label>}
+                        {this.state.isError &&
+                        <label className="error-message">Sikertelen jelszóváltoztatás!</label>}
+                        {this.state.isSuccess &&
+                        <label className="success-message">Sikeres jelszóváltoztatás!</label>}
                     </form>
                 </div>
             );

@@ -1,13 +1,12 @@
 import React, {Component} from "react";
 import CareReceiverService from "../../services/CareReceiverService";
+import * as Datetime from "react-datetime";
 
 class CareReceiverDetails extends Component {
     constructor({props, firstName, lastName, mothersName, birthDate}) {
         super(props);
         this.state = {
-            title: "",
             firstName: firstName,
-            middleName: "",
             lastName: lastName,
             mothersName: mothersName,
             birthDate: birthDate,
@@ -23,7 +22,11 @@ class CareReceiverDetails extends Component {
             startOfCare: "",
             endOfCare: "",
 
-            isDisabled: true
+            isDisabled: true,
+
+            feedbackVisible: false,
+            feedbackClass: "",
+            feedbackText: "",
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -37,9 +40,7 @@ class CareReceiverDetails extends Component {
     loadCareReceiverDetails(firstName, lastName, mothersName, birthDate) {
         CareReceiverService.get(firstName, lastName, mothersName, birthDate).then(response => {
             this.setState({
-                title: response.data.title,
                 firstName: response.data.firstName,
-                middleName: response.data.middleName,
                 lastName: response.data.lastName,
                 mothersName: response.data.mothersName,
                 birthDate: response.data.birthDate,
@@ -79,18 +80,6 @@ class CareReceiverDetails extends Component {
             <div>
                 <form className="care-receiver-details">
                     <table className="table-main institution-details">
-                        <tr>
-                            <th className="table-main-header institution-details-header">Titulus</th>
-                            <td className="institution-details-content">
-                                <input id="title"
-                                       className="details-input"
-                                       type="text"
-                                       onChange={this.handleChange}
-                                       value={this.state.title}
-                                       disabled={this.state.isDisabled}
-                                />
-                            </td>
-                        </tr>
 
                         <tr>
                             <th className="table-main-header institution-details-header">Vezetéknév</th>
@@ -119,20 +108,7 @@ class CareReceiverDetails extends Component {
                         </tr>
 
                         <tr>
-                            <th className="table-main-header institution-details-header">2. Utónév</th>
-                            <td className="institution-details-content">
-                                <input id="middleName"
-                                       className="details-input"
-                                       type="text"
-                                       onChange={this.handleChange}
-                                       value={this.state.middleName}
-                                       disabled={this.state.isDisabled}
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th className="table-main-header institution-details-header">Anyja Neve</th>
+                            <th className="table-main-header institution-details-header">Anyja neve</th>
                             <td className="institution-details-content">
                                 <input id="mothersName"
                                        className="details-input"
@@ -147,18 +123,23 @@ class CareReceiverDetails extends Component {
                         <tr>
                             <th className="table-main-header institution-details-header">Születési dátum</th>
                             <td className="institution-details-content">
-                                <input id="birthDate"
-                                       className="details-input"
-                                       type="text"
-                                       onChange={this.handleChange}
-                                       value={this.state.birthDate}
-                                       disabled={this.state.isDisabled}
+                                <Datetime
+                                    value={this.state.birthDate}
+                                    dateFormat="YYYY. MM. DD."
+                                    timeFormat=""
+                                    onChange={(date) => this.setState({
+                                        birthDate: date._d.toLocaleDateString('hu-HU', {
+                                            year: 'numeric',
+                                            month: 'numeric',
+                                            day: 'numeric'
+                                        })
+                                    })}
                                 />
                             </td>
                         </tr>
 
                         <tr>
-                            <th className="table-main-header institution-details-header">Születési Név</th>
+                            <th className="table-main-header institution-details-header">Születési név</th>
                             <td className="institution-details-content">
                                 <input id="birthName"
                                        className="details-input"
@@ -171,7 +152,7 @@ class CareReceiverDetails extends Component {
                         </tr>
 
                         <tr>
-                            <th className="table-main-header institution-details-header">Születési Hely</th>
+                            <th className="table-main-header institution-details-header">Születési hely</th>
                             <td className="institution-details-content">
                                 <input id="birthPlace"
                                        className="details-input"
@@ -306,44 +287,106 @@ class CareReceiverDetails extends Component {
                                             backupMothersName: undefined,
                                             backupBirthDate: undefined,
                                         });
-                                    }}>Módisítások Elvetése
+                                    }}>Módosítások Elvetése
                             </button>
                         }
                         {
                             !this.state.isDisabled &&
-                            <button type="button" id="button-save" disabled={!isSubmitAllowed}
+                            <button type="button" className="button-save" disabled={!isSubmitAllowed}
                                     onClick={() => {
-                                        CareReceiverService.update(this.state);
-                                        this.setState({
-                                            isDisabled: true,
-                                            backupFirstName: undefined,
-                                            backupLastName: undefined,
-                                            backupMothersName: undefined,
-                                            backupBirthDate: undefined,
-                                        });
-                                    }}>Mentés</button>
+                                        try {
+                                            CareReceiverService.update(this.state);
+                                            this.setState({
+                                                isDisabled: true,
+                                                backupFirstName: undefined,
+                                                backupLastName: undefined,
+                                                backupMothersName: undefined,
+                                                backupBirthDate: undefined,
+                                                feedbackVisible: true,
+                                                feedbackClass: "success-message",
+                                                feedbackText: "Módosítások sikeresen mentve"
+                                            })
+                                        } catch (e) {
+                                            this.setState({
+                                                feedbackVisible: true,
+                                                feedbackClass: "error-message",
+                                                feedbackText: "Módosítások mentése sikertelen"
+                                            })
+                                        }
+                                    }}
+                            >
+                                Mentés
+                            </button>
                         }
                         {
                             this.state.careStatus === "ACTIVE" &&
                             <button type="button" id="button-delete" onClick={() => {
-                                CareReceiverService.terminate(this.state);
-                            }
-                            }>Ellátás megszűntetése</button>
+                                try {
+                                    CareReceiverService.terminate(this.state);
+                                    this.setState({
+                                        feedbackVisible: true,
+                                        feedbackClass: "success-message",
+                                        feedbackText: "Ellátás sikeresen megszűntetve"
+                                    });
+                                } catch (e) {
+                                    this.setState({
+                                        feedbackVisible: true,
+                                        feedbackClass: "error-message",
+                                        feedbackText: "Ellátás megszűntetése sikertelen"
+                                    });
+                                }
+                            }}>
+                                Ellátás megszűntetése
+                            </button>
                         }
                         {
                             this.state.careStatus === "WAITING" &&
-                            <button type="button" id="button-save" onClick={() => {
-                                CareReceiverService.startCare(this.state);
-                            }
-                            }>Ellátás megkezdése</button>
+                            <button type="button" className="button-save" onClick={() => {
+                                try {
+                                    CareReceiverService.startCare(this.state);
+                                    this.setState({
+                                        feedbackVisible: true,
+                                        feedbackClass: "success-message",
+                                        feedbackText: "Sikeresen ellátásba véve"
+                                    });
+                                } catch (e) {
+                                    this.setState({
+                                        feedbackVisible: true,
+                                        feedbackClass: "error-message",
+                                        feedbackText: "Ellátásba vétel sikertelen"
+                                    });
+                                }
+                            }}>
+                                Ellátás megkezdése
+                            </button>
                         }
                         {
                             this.state.careStatus === "WAITING" &&
                             <button type="button" id="button-delete" onClick={() => {
-                                CareReceiverService.delete(this.state.firstName, this.state.lastName,
-                                    this.state.mothersName, this.state.birthDate);
-                            }
-                            }>Törlés várólistáról</button>
+                                try {
+                                    CareReceiverService.delete(this.state.firstName, this.state.lastName,
+                                        this.state.mothersName, this.state.birthDate);
+                                    this.setState({
+                                        feedbackVisible: true,
+                                        feedbackClass: "success-message",
+                                        feedbackText: "Sikeresen törölve a várólistáról"
+                                    });
+                                } catch (e) {
+                                    this.setState({
+                                        feedbackVisible: true,
+                                        feedbackClass: "error-message",
+                                        feedbackText: "Várólistáról törlés sikertelen"
+                                    });
+                                }
+                            }}>
+                                Törlés várólistáról
+                            </button>
+                        }
+                    </div>
+                    <div>
+                        {
+                            this.state.feedbackVisible &&
+                            <label className={this.state.feedbackClass}>{this.state.feedbackText}</label>
                         }
                     </div>
                 </form>

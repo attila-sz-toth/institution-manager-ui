@@ -4,6 +4,7 @@ import InstitutionService from "../../services/InstitutionService";
 
 import '../../css/Main.css';
 import '../../css/Tables.css';
+import {INSTITUTION_SESSION_ATTRIBUTE_NAME} from "../../services/AuthenticationService";
 
 class InstitutionsGrid extends Component {
     constructor(props) {
@@ -26,7 +27,10 @@ class InstitutionsGrid extends Component {
                     <tr key={institution.name}>
                         <td className="users-table-cell">{institution.name}</td>
                         <td className="users-table-cell">{institution.type.description}</td>
-                        <td><input type="button" value="Módosítás" onClick={() => this.handleDelete(institution.name)}
+                        <td><input type="button" value="Adatlap" onClick={() => {
+                            sessionStorage.setItem(INSTITUTION_SESSION_ATTRIBUTE_NAME, institution.name);
+                            window.location = '/institution-home';
+                        }}
                                    className="edit-button"/>
                         </td>
                         <td><input type="button" value="Törlés" onClick={() => this.handleDelete(institution.name)}
@@ -44,16 +48,17 @@ class InstitutionsGrid extends Component {
     handleDelete(username) {
         InstitutionService.deleteUser(username)
             .then(response => {
-                console.log("User is deleted successfully!");
+                console.log("Institution is deleted successfully!");
                 this.setState({
-                    isSubmissionFailed: false,
-                    isSubmissionSuccessful: true
+                    isDeleteFailed: false,
+                    isDeleteSuccessful: true
                 });
                 this.loadInstitutions();
             }).catch(() => {
-            console.log("User deletion failed!");
+            console.log("Institution deletion failed!");
             this.setState({
-                isSubmissionFailed: true,
+                isDeleteFailed: true,
+                isDeleteSuccessful: false
             });
         });
     };
@@ -68,7 +73,7 @@ class InstitutionsGrid extends Component {
                     <tr>
                         <th className="table-main-header" id="name">Intézmény Neve</th>
                         <th className="table-main-header" id="institution-type">Intézmény Jellege</th>
-                        <th coldiv="2" className="table-main-header" id="action" >Műveletek</th>
+                        <th colspan="2" className="table-main-header" id="action">Műveletek</th>
                     </tr>
                     </thead>
                     <tbody>

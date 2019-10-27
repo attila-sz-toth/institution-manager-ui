@@ -243,7 +243,6 @@ td.rdtYear:hover {
 .form-control {
     min-width: 50px;
     max-width: 100px;
-    margin-left: 6px;
     background: #f2f2f2;
     cursor: pointer;
     border: 1px solid rgba(66, 139, 202, .2);
@@ -251,5 +250,5 @@ td.rdtYear:hover {
     font-family: "Roboto", sans-serif;
     font-size: 14px;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
 }

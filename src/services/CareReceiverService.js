@@ -73,13 +73,13 @@ class CareReceiverService {
 
     terminate(state) {
         state.careStatus = "TERMINATED";
-        state.endOfCare = new Date().toLocaleDateString('ko-KR');
+        state.endOfCare = new Date().toLocaleDateString('hu-HU');
         this.updateBase(state, state.firstName, state.lastName, state.mothersName, state.birthDate);
     }
 
     startCare(state) {
         state.careStatus = "ACTIVE";
-        state.startOfCare = new Date().toLocaleDateString('ko-KR');
+        state.startOfCare = new Date().toLocaleDateString('hu-HU');
         this.updateBase(state, state.firstName, state.lastName, state.mothersName, state.birthDate);
     }
 
@@ -87,9 +87,7 @@ class CareReceiverService {
         console.log('Updating care receiver details ' + state.firstName + " " + state.lastName);
         return axios.put(`${REST_SERVICE_URL}${this.PATH_SAVE}/${firstName}/${lastName}/${mothersName}/${birthDate}`,
             {
-                title: state.title,
                 firstName: state.firstName,
-                middleName: state.middleName,
                 lastName: state.lastName,
                 mothersName: state.mothersName,
                 birthDate: state.birthDate,
@@ -117,9 +115,7 @@ class CareReceiverService {
         console.log('Add care receiver ' + state.firstName + " " + state.lastName);
         return axios.post(`${REST_SERVICE_URL}${this.PATH_GET_ADD}`,
             {
-                title: state.title,
                 firstName: state.firstName,
-                middleName: state.middleName,
                 lastName: state.lastName,
                 mothersName: state.mothersName,
                 birthDate: state.birthDate,
@@ -164,7 +160,7 @@ class CareReceiverService {
     normativeByYear(date) {
         let institution = AuthenticationService.getInstitution();
         return this.simpleGet(this.PATH_NORMATIVE_YEAR + '/' + institution + '/'
-            + date.toLocaleDateString('hu-HU', {year: 'numeric'}));
+            + date.getFullYear());
     }
 
     countCareReceiversByDate(careReceiverFromDate, careReceiverToDate) {

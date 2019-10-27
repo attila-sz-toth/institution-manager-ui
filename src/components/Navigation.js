@@ -23,7 +23,7 @@ class Navigation extends Component {
                     <ul className="navigation-item" id="navigation-left">
                         <li className="nav-title">{institution}</li>
                         <li className="menu-separator">|</li>
-                        <li><Link className="nav-link nav-link-first" to="/employee-home">Intézmény Adatai</Link></li>
+                        <li><Link className="nav-link nav-link-first" to="/institution-home">Intézmény Adatai</Link></li>
                         <li><Link className="nav-link" to="/care-receivers">Ellátottak Kezelése</Link></li>
                         <li><Link className="nav-link" to="/add-care-receiver">Új Ellátott felvétele</Link></li>
                     </ul>

@@ -3,12 +3,12 @@ import React, {Component} from 'react';
 import ProtectedRoute from "./ProtectedRoute";
 import Login from "./Login";
 import AdminHome from "./admin/AdminHome";
-import EmployeeHome from "./employee/EmployeeHome";
+import InstitutionHome from "./employee/InstitutionHome";
 import Home from "./Home";
 import Profile from "./Profile";
 import AdminInstitution from "./admin/AdminInstitution";
 import CareReceivers from "./employee/CareReceivers";
-import AddCareReceiver from "./admin/AddCareReceiver";
+import AddCareReceiver from "./employee/AddCareReceiver";
 
 
 class App extends Component {
@@ -23,7 +23,7 @@ class App extends Component {
                         <ProtectedRoute path="/profile-settings" exact component={Profile}/>
                         <ProtectedRoute path="/admin-user" exact component={AdminHome}/>
                         <ProtectedRoute path="/admin-institution" exact component={AdminInstitution}/>
-                        <ProtectedRoute path="/employee-home" exact component={EmployeeHome}/>
+                        <ProtectedRoute path="/institution-home" exact component={InstitutionHome}/>
                         <ProtectedRoute path="/care-receivers" exact component={CareReceivers}/>
                         <ProtectedRoute path="/add-care-receiver" exact component={AddCareReceiver}/>
                         <Route path="/login" exact component={Login}/>

@@ -67,11 +67,11 @@
     cursor: pointer;
 }
 
-.care-receiver-details button#button-save {
+.care-receiver-details button.button-save {
     background: #4CAF50;
 }
 
-.care-receiver-details button:disabled#button-save {
+.care-receiver-details button:disabled.button-save {
     background: grey;
     cursor: default;
 }
@@ -98,9 +98,9 @@
 }
 
 .add-care-receiver-warning {
-    margin-top: 0px;
+    margin-top: 0;
     margin-bottom: 12px;
-    padding: 0;
+    padding-left: 6px;
     color: red;
     font-size: 12px;
     font-style: italic;
@@ -113,8 +113,12 @@
     font-weight: normal;
 }
 
-.hint {
-    font-size: 12px;
-    font-style: italic;
-    font-weight: normal;
+input:focus{
+    outline: none;
+}
+
+select#sex {
+    border: none;
+    cursor: pointer;
+    outline: none;
 }

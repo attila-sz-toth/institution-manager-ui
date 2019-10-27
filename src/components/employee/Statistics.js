@@ -142,7 +142,7 @@ class Statistics extends Component {
                         </div>
                     </th>
                     <td className="institution-details-content">
-                        {this.state.normativeYear}
+                        {this.state.normativeYear} {this.state.normativeYear !== "" && <span>Ft</span>}
                     </td>
                 </tr>
             </table>

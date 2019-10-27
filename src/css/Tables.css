@@ -168,3 +168,54 @@ table.care-types {
 .institution-details-care-types {
     list-style-type: none;
 }
+
+.normative {
+    width: 275px;
+}
+
+.normative-form {
+    width: 275px;
+}
+
+.normative input {
+    border: none;
+}
+
+.normative-form.button-panel {
+    text-align: center;
+}
+
+.normative-form button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    min-width: 200px;
+    max-width: 300px;
+    border: 0;
+    margin: 8px 6px 8px 6px;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    cursor: pointer;
+
+    opacity: 0.5;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+}
+
+.normative-form button:hover:enabled {
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+    opacity: 1;
+    cursor: pointer;
+}
+
+.normative-form button.button-save {
+    background: #4CAF50;
+}
+
+.normative-form button:disabled.button-save {
+    background: grey;
+    cursor: default;
+}

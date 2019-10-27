@@ -19,9 +19,6 @@ class WaitingListGrid extends Component {
             totalPages: 0,
 
             isDetailsActive: false,
-
-            isDeleteFailed: false,
-            isDeleteSuccessful: false,
         };
     }
 
@@ -34,8 +31,7 @@ class WaitingListGrid extends Component {
             let rows = response.data.content.map(careReceiver => {
                 return (
                     <tr key={careReceiver.careReceivername}>
-                        <td className="users-table-cell">{careReceiver.title} {careReceiver.lastName} {careReceiver.firstName}
-                            {careReceiver.middleName}</td>
+                        <td className="users-table-cell">{careReceiver.title} {careReceiver.lastName} {careReceiver.firstName}</td>
                         <td className="users-table-cell">{careReceiver.birthDate}</td>
                         <td className="users-table-cell">{careReceiver.mothersName}</td>
                         <td><input type="button" value="Adatok Megtekintése"
@@ -110,7 +106,7 @@ class WaitingListGrid extends Component {
                     <tr>
                         <th className="table-main-header" id="care-receiver-name">Név</th>
                         <th className="table-main-header" id="care-receiver-birth-date">Születési Dátum</th>
-                        <th className="table-main-header" id="care-receiver-name-mothers-name">Anyja Neve</th>
+                        <th className="table-main-header" id="care-receiver-name-mothers-name">Anyja neve</th>
                         <th className="table-main-header" id="action">Művelet</th>
                     </tr>
                     </thead>
@@ -129,7 +125,7 @@ class WaitingListGrid extends Component {
                     <div>
                         <div className="care-receiver-detail-header">
                             <h3 id="care-receiver-detail-title">
-                                {this.state.title} {this.state.lastName} {this.state.firstName} {this.state.middleName}
+                                {this.state.lastName} {this.state.firstName}
                             </h3>
                             <h3><Link id="care-receiver-detail-close" onClick={() => this.closeDetails()}>&times;</Link>
                             </h3>
