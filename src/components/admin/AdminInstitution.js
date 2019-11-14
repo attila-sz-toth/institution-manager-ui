@@ -33,7 +33,7 @@ class AdminInstitution extends Component {
                 <h3>Intézmények</h3>
                 <InstitutionsGrid/>
                 <div className="care-receiver-detail-header">
-                    <h3>Új Itézmény hozzáadása</h3>
+                    <h3>Új intézmény hozzáadása</h3>
                     <h3><Link id="care-receiver-detail-close" onClick={() => this.setAddInstitutionVisibility()}>
                         {this.state.addInstitutionOpenClose}
                     </Link>

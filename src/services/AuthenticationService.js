@@ -7,7 +7,7 @@ export const INSTITUTION_SESSION_ATTRIBUTE_NAME = 'institution';
 export const TOKEN = 'TOKEN';
 export const ADMIN_ROLE = 'ADMIN';
 export const EMPLOYEE_ROLE = 'EMPLOYEE';
-export const REST_SERVICE_URL = 'http://localhost:8080';
+export const REST_SERVICE_URL = 'http://institutionm-env.tqfqwctx4s.us-east-2.elasticbeanstalk.com';
 
 class AuthenticationService {
 

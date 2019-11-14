@@ -293,7 +293,7 @@ class AddCareReceiver extends Component {
                         </button>
                     </div>
                     {this.state.isSubmissionFailed &&
-                    <label className="error-message">Új ellátott hozzáadása sikertelen!</label>}
+                    <label className="error-message"> </label>}
                     {this.state.isSubmissionSuccessful &&
                     <label className="success-message">Új ellátott sikeresen hozzáadva!</label>}
                 </form>

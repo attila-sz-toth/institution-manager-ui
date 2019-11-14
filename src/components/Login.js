@@ -55,12 +55,12 @@ class Login extends Component {
                     response.data.role, response.data.institution);
                 this.props.history.push(`/home`);
                 this.setState({
-                    isSubmissionFailed: false,
+                    isLoginFailed: false,
                 });
             }).catch(() => {
             console.log("Authentication failed!");
             this.setState({
-                isSubmissionFailed: true,
+                isLoginFailed: true,
             });
         });
     };
