@@ -4,6 +4,7 @@ import UserAdminService from "../../services/UserAdminService";
 
 import '../../css/Main.css';
 import '../../css/Tables.css';
+import AuthenticationService from "../../services/AuthenticationService";
 
 class UsersGrid extends Component {
     constructor(props) {
@@ -31,9 +32,12 @@ class UsersGrid extends Component {
                         <td className="users-table-cell">{user.name}</td>
                         <td className="users-table-cell">{user.role.description}</td>
                         <td className="users-table-cell">{user.institution}</td>
-                        <td><input type="button" value="Törlés" onClick={() => this.handleDelete(user.username)}
-                                   className="delete-button"/>
-                        </td>
+                        {
+                            AuthenticationService.getUserName() !== user.username &&
+                            <td><input type="button" value="Törlés" onClick={() => this.handleDelete(user.username)}
+                                       className="delete-button"/>
+                            </td>
+                        }
                     </tr>
                 );
             });
